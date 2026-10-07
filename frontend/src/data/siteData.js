@@ -575,7 +575,7 @@ export const budgetRanges = [
 export const founders = [
   {
     id: "founder-1",
-    name: "Avula Dharaneeswar Reddy",
+    name: "Dharaneeswar Reddy Avula",
     role: "Co-Founder & CEO",
     initials: "AD",
     social: {
