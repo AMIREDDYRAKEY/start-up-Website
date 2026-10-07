@@ -2,9 +2,9 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 
 const SEO = ({
-  title = "DHANVIRA Technologies | Web, Mobile, AI & Software Solutions",
-  description = "DHANVIRA Technologies builds modern web applications, Android apps, custom software, AI solutions and scalable SaaS products.",
-  keywords = "web development, android apps, AI solutions, SaaS, custom software, DHANVIRA Technologies",
+  title = "DMANBRAY Innovations | Innovate, Build & Grow",
+  description = "DMANBRAY Innovations builds modern web applications, Android apps, custom software, AI solutions and scalable SaaS products.",
+  keywords = "web development, android apps, AI solutions, SaaS, custom software, DMANBRAY Innovations",
 }) => {
   return (
     <Helmet>

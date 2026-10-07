@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
-import logo from "../assets/dhanvira-nav-logo.png";
+import logo from "../assets/dmanbray-nav-logo.png";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -44,16 +44,16 @@ const Navbar = () => {
             <div className="w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-[#d4af37] via-[#47484c] to-[#d4af37] shadow-md group-hover:scale-105 transition-transform duration-300">
               <img
                 src={logo}
-                alt="DHANVIRA Logo"
+                alt="DMANBRAY Logo"
                 className="w-full h-full object-cover rounded-full bg-white"
               />
             </div>
             <div>
               <span className="text-white font-display font-bold text-lg tracking-wider group-hover:text-accent-gold transition-colors">
-                DHANVIRA
+                DMANBRAY
               </span>
               <span className="block text-[10px] text-accent-gold font-semibold tracking-[0.25em] uppercase -mt-1">
-                Technologies
+                Innovations
               </span>
             </div>
           </Link>

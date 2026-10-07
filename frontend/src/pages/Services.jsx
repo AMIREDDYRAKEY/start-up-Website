@@ -10,7 +10,7 @@ const Services = () => {
   return (
     <>
       <SEO
-        title="Services | DHANVIRA Technologies"
+        title="Services | DMANBRAY Innovations"
         description="Comprehensive engineering services: Web Apps, Android Apps, Custom Software, AI, SaaS, Backend, Cloud & Automation."
       />
 
@@ -97,7 +97,7 @@ const Services = () => {
 
                     <div className="lg:col-span-5 flex flex-col justify-between h-full pt-4 lg:pt-0 border-t lg:border-t-0 lg:border-l border-[#47484c]/30 lg:pl-8">
                       <div className="space-y-4 mb-8">
-                        <h4 className="text-sm font-semibold text-white">Why Choose DHANVIRA?</h4>
+                        <h4 className="text-sm font-semibold text-white">Why Choose DMANBRAY?</h4>
                         <p className="text-xs text-charcoal-300 leading-relaxed">
                           We deliver production-ready code with continuous testing, automated CI/CD deployment pipelines, and long-term maintenance support.
                         </p>

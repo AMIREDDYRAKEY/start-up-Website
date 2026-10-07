@@ -9,8 +9,34 @@ const api = axios.create({
 });
 
 export const submitContact = async (formData) => {
-  const response = await api.post("/contacts", formData);
-  return response.data;
+  try {
+    const response = await api.post("/contacts", formData);
+    return response.data;
+  } catch (backendError) {
+    // If backend is unreachable, gracefully submit to Formspree directly
+    const formspreeEndpoint =
+      import.meta.env.VITE_FORMSPREE_ENDPOINT || "https://formspree.io/f/mljgjjvn";
+
+    if (formspreeEndpoint) {
+      try {
+        const fsResponse = await axios.post(formspreeEndpoint, formData, {
+          headers: {
+            Accept: "application/json",
+          },
+        });
+        if (fsResponse.status === 200 || fsResponse.data?.ok) {
+          return {
+            success: true,
+            message:
+              "Thank you! Your project inquiry has been received. Our team will contact you shortly.",
+          };
+        }
+      } catch (fsError) {
+        console.error("Formspree fallback error:", fsError);
+      }
+    }
+    throw backendError;
+  }
 };
 
 export const checkHealth = async () => {

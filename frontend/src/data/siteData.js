@@ -524,7 +524,7 @@ export const processSteps = [
   },
 ];
 
-export const whyDhanvira = [
+export const whyDmanbray = [
   {
     title: "Business First",
     description:

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import logo3dBackground from "../assets/dhanvira-3d-logo.png";
+import logo3dBackground from "../assets/dmanbray-3d-logo.png";
 
 const BackgroundCanvas = () => {
   return (
@@ -34,24 +34,24 @@ const BackgroundCanvas = () => {
         className="absolute -bottom-[15%] right-[10%] w-[650px] h-[650px] rounded-full bg-gradient-to-tl from-[#2563eb]/20 via-[#d4af37]/15 to-transparent blur-[180px]"
       />
 
-      {/* Animated 3D Metallic Blue Emblem Background for Entire Website */}
+      {/* Subtle DNR Monogram Watermark Background */}
       <motion.div
         animate={{
-          scale: [1, 1.03, 1],
-          opacity: [0.13, 0.18, 0.13],
+          scale: [1, 1.05, 1],
+          opacity: [0.025, 0.05, 0.025],
         }}
         transition={{
-          duration: 25,
+          duration: 20,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="relative w-full h-full max-w-[1920px] flex items-center justify-center pointer-events-none select-none"
+        className="relative flex items-center justify-center pointer-events-none select-none"
       >
         <img
           src={logo3dBackground}
           alt=""
           aria-hidden="true"
-          className="w-full h-full object-cover sm:object-contain object-center pointer-events-none select-none"
+          className="w-[180px] h-[180px] sm:w-[260px] sm:h-[260px] lg:w-[340px] lg:h-[340px] object-contain rounded-full pointer-events-none select-none filter drop-shadow-[0_0_30px_rgba(37,99,235,0.12)]"
         />
       </motion.div>
 

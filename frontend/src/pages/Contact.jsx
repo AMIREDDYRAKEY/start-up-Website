@@ -91,8 +91,8 @@ const Contact = () => {
   return (
     <>
       <SEO
-        title="Contact Us | DHANVIRA Technologies"
-        description="Get in touch with DHANVIRA Technologies. Tell us about your project requirements."
+        title="Contact Us | DMANBRAY Innovations"
+        description="Get in touch with DMANBRAY Innovations. Tell us about your project requirements."
       />
 
       {/* Hero */}
@@ -135,7 +135,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-xs text-charcoal-400 font-mono uppercase tracking-wider">Email</p>
-                    <p className="text-white font-medium mt-0.5">contact@dhanvira.com</p>
+                    <p className="text-white font-medium mt-0.5">contact@dmanbray.com</p>
                   </div>
                 </div>
 

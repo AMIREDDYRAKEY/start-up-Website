@@ -10,7 +10,7 @@ const Projects = () => {
   return (
     <>
       <SEO
-        title="Projects | DHANVIRA Technologies"
+        title="Projects | DMANBRAY Innovations"
         description="Explore our portfolio of web applications, Android apps, custom software, AI solutions and SaaS platforms."
       />
 

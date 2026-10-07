@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../assets/dhanvira-circle-logo.png";
+import logo from "../assets/dmanbray-circle-logo.png";
 
 const Preloader = ({ onFinish }) => {
   const [progress, setProgress] = useState(0);
@@ -80,11 +80,11 @@ const Preloader = ({ onFinish }) => {
                 initial={{ scale: 0.85, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="w-20 h-20 sm:w-26 sm:h-26 rounded-full overflow-hidden bg-white p-2 sm:p-2.5 border-2 border-[#d4af37] shadow-[0_0_35px_rgba(212,175,55,0.25)] flex items-center justify-center relative z-10"
+                className="w-20 h-20 sm:w-26 sm:h-26 rounded-full overflow-hidden bg-[#121316] p-1.5 sm:p-2 border-2 border-[#d4af37] shadow-[0_0_35px_rgba(212,175,55,0.25)] flex items-center justify-center relative z-10"
               >
                 <img
                   src={logo}
-                  alt="DHANVIRA Logo"
+                  alt="DMANBRAY Logo"
                   className="w-full h-full object-contain rounded-full"
                 />
               </motion.div>
@@ -98,7 +98,7 @@ const Preloader = ({ onFinish }) => {
               className="text-center mt-6"
             >
               <h1 className="text-xl sm:text-2xl md:text-3xl font-display font-extrabold tracking-[0.25em] uppercase text-white">
-                DHANVIRA
+                DMANBRAY
               </h1>
               <p className="text-xs sm:text-sm font-mono text-[#d4af37] font-bold tracking-widest mt-2">
                 {progress}%

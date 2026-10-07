@@ -11,7 +11,7 @@ const startServer = async () => {
     await connectDB();
 
     app.listen(PORT, () => {
-      console.log(`\n🚀 DHANVIRA Technologies API Server`);
+      console.log(`\n🚀 DMANBRAY Innovations API Server`);
       console.log(`   Environment: ${process.env.NODE_ENV || "development"}`);
       console.log(`   Port: ${PORT}`);
       console.log(`   URL: http://localhost:${PORT}`);

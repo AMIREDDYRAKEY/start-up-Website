@@ -24,10 +24,10 @@ import {
   technologies,
   projects,
   processSteps,
-  whyDhanvira,
+  whyDmanbray,
   founders,
 } from "../data/siteData";
-import circleLogo from "../assets/dhanvira-circle-logo.png";
+import circleLogo from "../assets/dmanbray-circle-logo.png";
 import founder1Img from "../assets/founder-1.jpg";
 import founder2Img from "../assets/founder-2.jpg";
 import founder3Img from "../assets/founder-3.jpg";
@@ -70,7 +70,7 @@ const HeroSection = () => {
               transition={{ duration: 1.1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="text-charcoal-200 text-base sm:text-lg max-w-xl leading-relaxed mb-8 font-normal"
             >
-              DHANVIRA Technologies develops enterprise-grade Web Applications, Native
+              DMANBRAY Innovations develops enterprise-grade Web Applications, Native
               Android Apps, Custom AI Architectures, and Scalable Cloud SaaS Products.
             </motion.p>
 
@@ -144,7 +144,7 @@ const HeroSection = () => {
                   <div className="w-52 h-52 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden bg-white p-2.5 sm:p-3 border-2 border-[#d4af37] shadow-2xl flex items-center justify-center">
                     <img
                       src={circleLogo}
-                      alt="DHANVIRA Emblem"
+                      alt="DMANBRAY Emblem"
                       className="w-full h-full object-contain rounded-full"
                     />
                   </div>
@@ -452,7 +452,7 @@ const CTASection = () => {
             <span className="gradient-text-gold">Let's Build It Together.</span>
           </h2>
           <p className="text-charcoal-200 text-base sm:text-lg max-w-xl mx-auto mb-9 leading-relaxed">
-            Collaborate with DHANVIRA Technologies for full-cycle software development, custom AI tools, and scalable cloud solutions.
+            Collaborate with DMANBRAY Innovations for full-cycle software development, custom AI tools, and scalable cloud solutions.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/contact" className="btn-gold w-full sm:w-auto">

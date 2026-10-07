@@ -55,7 +55,7 @@ app.use("/api/contacts", contactLimiter, contactRoutes);
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "DHANVIRA Technologies API is running",
+    message: "DMANBRAY Innovations API is running",
     timestamp: new Date().toISOString(),
   });
 });

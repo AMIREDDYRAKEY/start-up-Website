@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
-import logo from "../assets/dhanvira-nav-logo.png";
+import logo from "../assets/dmanbray-nav-logo.png";
 
 const footerLinks = {
   legal: [
@@ -63,16 +63,16 @@ const Footer = () => {
               <div className="w-11 h-11 rounded-xl bg-[#1e2023] border border-[#47484c]/50 p-1 flex items-center justify-center shadow-lg group-hover:border-[#d4af37]/60 transition-colors">
                 <img
                   src={logo}
-                  alt="DHANVIRA Emblem"
+                  alt="DMANBRAY Emblem"
                   className="w-full h-full object-contain"
                 />
               </div>
               <div>
                 <span className="text-white font-display font-bold text-xl tracking-wider">
-                  DHANVIRA
+                  DMANBRAY
                 </span>
                 <span className="block text-[10px] text-[#d4af37] font-semibold tracking-[0.25em] uppercase">
-                  Technologies
+                  Innovations
                 </span>
               </div>
             </Link>
@@ -130,7 +130,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-14 pt-6 border-t border-[#47484c]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-slate-400 text-xs">
-            © 2026 DHANVIRA Technologies. All rights reserved.
+            © 2026 DMANBRAY Innovations. All rights reserved.
           </p>
           <p className="text-slate-400 text-xs flex items-center gap-1.5">
             Crafted with <Heart className="w-3.5 h-3.5 text-[#d4af37] fill-[#d4af37]" /> for digital excellence

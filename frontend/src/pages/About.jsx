@@ -15,7 +15,6 @@ import {
 import SEO from "../components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
 import { founders } from "../data/siteData";
-import circleLogo from "../assets/dhanvira-circle-logo.png";
 import founder1Img from "../assets/founder-1.jpg";
 import founder2Img from "../assets/founder-2.jpg";
 import founder3Img from "../assets/founder-3.jpg";
@@ -63,8 +62,8 @@ const About = () => {
   return (
     <>
       <SEO
-        title="About Us | DHANVIRA Technologies"
-        description="Learn about DHANVIRA Technologies - our mission, vision, values and technological capabilities."
+        title="About Us | DMANBRAY Innovations"
+        description="Learn about DMANBRAY Innovations - our mission, vision, values and technological capabilities."
       />
 
       {/* Hero */}
@@ -84,7 +83,7 @@ const About = () => {
               <span className="gradient-text-gold">With Purpose and Precision.</span>
             </h1>
             <p className="text-charcoal-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
-              DHANVIRA Technologies is a high-growth technology startup delivering
+              DMANBRAY Innovations is a high-growth technology startup delivering
               end-to-end digital engineering. We partner with ambitious founders and
               enterprises to turn complex ideas into robust software products.
             </p>
@@ -134,7 +133,7 @@ const About = () => {
               Meet The <span className="gradient-text-gold">Founders</span>
             </h2>
             <p className="text-charcoal-300 text-sm sm:text-base max-w-xl mx-auto font-normal">
-              The architects and technologists steering engineering innovation, product excellence, and long-term vision at DHANVIRA.
+              The architects and technologists steering engineering innovation, product excellence, and long-term vision at DMANBRAY.
             </p>
           </div>
         </ScrollReveal>

@@ -1,4 +1,8 @@
 import Contact from "../models/Contact.js";
+import {
+  sendInquiryToOwner,
+  sendConfirmationToClient,
+} from "../services/emailService.js";
 
 export const createContact = async (req, res) => {
   try {
@@ -15,9 +19,27 @@ export const createContact = async (req, res) => {
       message,
     });
 
+    // Send email notification to owner rakeyr213@gmail.com
+    sendInquiryToOwner({
+      name,
+      email,
+      phone,
+      company,
+      projectType,
+      budget,
+      message,
+    }).catch((err) => console.error("Error sending owner email:", err.message));
+
+    // Send confirmation to client
+    sendConfirmationToClient({
+      name,
+      email,
+      projectType,
+    }).catch((err) => console.error("Error sending client confirmation:", err.message));
+
     res.status(201).json({
       success: true,
-      message: "Thank you! Your message has been received. We'll get back to you soon.",
+      message: "Thank you! Your project inquiry has been received. Our team will contact you shortly.",
       data: {
         id: contact._id,
         name: contact.name,

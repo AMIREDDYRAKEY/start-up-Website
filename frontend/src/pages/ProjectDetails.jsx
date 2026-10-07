@@ -43,7 +43,7 @@ const ProjectDetails = () => {
   return (
     <>
       <SEO
-        title={`${project.title} | DHANVIRA Technologies`}
+        title={`${project.title} | DMANBRAY Innovations`}
         description={project.shortDescription}
       />
 
