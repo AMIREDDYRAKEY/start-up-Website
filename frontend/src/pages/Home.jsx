@@ -28,7 +28,7 @@ import {
   founders,
 } from "../data/siteData";
 import circleLogo from "../assets/dmanbray-circle-logo.png";
-import founder1Img from "../assets/founder-1.jpg";
+import founder1Img from "../assets/Dharaneeswar.png";
 import founder2Img from "../assets/founder-2.jpg";
 import founder3Img from "../assets/founder-3.jpg";
 /* ──────────── HERO SECTION WITH ROUND LOGO ──────────── */
