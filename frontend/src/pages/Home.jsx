@@ -396,12 +396,12 @@ const FoundersSection = () => {
         </div>
       </ScrollReveal>
 
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+      <div className="max-w-[1055px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
         {founders.map((founder, idx) => {
           const portrait = founderImages[idx];
           return (
             <ScrollReveal key={founder.id} delay={idx * 0.1} className="h-full">
-              <div className="charcoal-card rounded-2xl p-6 sm:p-7 flex flex-col items-center text-center justify-between h-full border-2 border-[#47484c]/70 hover:border-[#d4af37] shadow-[0_16px_36px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_45px_rgba(212,175,55,0.18)] transition-all duration-300 group relative overflow-hidden">
+              <div className="charcoal-card rounded-2xl py-6 px-7 sm:px-8 flex flex-col items-center text-center justify-between h-full border-2 border-[#47484c]/70 hover:border-[#d4af37] shadow-[0_16px_36px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_45px_rgba(212,175,55,0.18)] transition-all duration-300 group relative overflow-hidden">
                 {/* Subtle top gold accent line */}
                 <div className="absolute top-0 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-transparent via-[#d4af37]/50 to-transparent group-hover:via-[#d4af37] transition-all" />
 
