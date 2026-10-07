@@ -15,7 +15,7 @@ import {
 import SEO from "../components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
 import { founders } from "../data/siteData";
-import founder1Img from "../assets/Dharaneeswar.png";
+import founder1Img from "../assets/founder-1.jpg";
 import founder2Img from "../assets/founder-2.jpg";
 import founder3Img from "../assets/founder-3.jpg";
 
