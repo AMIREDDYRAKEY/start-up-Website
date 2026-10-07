@@ -396,43 +396,45 @@ const FoundersSection = () => {
         </div>
       </ScrollReveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
         {founders.map((founder, idx) => {
           const portrait = founderImages[idx];
           return (
-            <ScrollReveal key={founder.id} delay={idx * 0.1}>
-              <div className="charcoal-card rounded-3xl p-8 sm:p-10 flex flex-col items-center text-center border-2 border-[#47484c]/70 hover:border-[#d4af37] shadow-[0_16px_36px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_45px_rgba(212,175,55,0.18)] transition-all duration-300 group relative overflow-hidden">
+            <ScrollReveal key={founder.id} delay={idx * 0.1} className="h-full">
+              <div className="charcoal-card rounded-2xl p-6 sm:p-7 flex flex-col items-center text-center justify-between h-full border-2 border-[#47484c]/70 hover:border-[#d4af37] shadow-[0_16px_36px_rgba(0,0,0,0.45)] hover:shadow-[0_20px_45px_rgba(212,175,55,0.18)] transition-all duration-300 group relative overflow-hidden">
                 {/* Subtle top gold accent line */}
                 <div className="absolute top-0 left-1/4 right-1/4 h-[2px] bg-gradient-to-r from-transparent via-[#d4af37]/50 to-transparent group-hover:via-[#d4af37] transition-all" />
 
-                {/* Founder Image with Rounded Border Frame */}
-                <div className="relative mb-5">
-                  {/* Ambient Gold Glow */}
-                  <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-[#d4af37]/30 via-transparent to-[#47484c]/30 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="flex flex-col items-center w-full">
+                  {/* Founder Image with Rounded Border Frame */}
+                  <div className="relative mb-4">
+                    {/* Ambient Gold Glow */}
+                    <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-[#d4af37]/30 via-transparent to-[#47484c]/30 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  {/* Rounded Border Image Frame */}
-                  <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full p-1 bg-gradient-to-b from-[#d4af37] via-[#47484c] to-[#1e2023] shadow-[0_0_30px_rgba(212,175,55,0.2)] group-hover:scale-105 transition-transform duration-300">
-                    <img
-                      src={portrait}
-                      alt={founder.name}
-                      className="w-full h-full object-cover rounded-full"
-                    />
+                    {/* Rounded Border Image Frame */}
+                    <div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full p-1 bg-gradient-to-b from-[#d4af37] via-[#47484c] to-[#1e2023] shadow-[0_0_25px_rgba(212,175,55,0.2)] group-hover:scale-105 transition-transform duration-300">
+                      <img
+                        src={portrait}
+                        alt={founder.name}
+                        className="w-full h-full object-cover rounded-full"
+                      />
+                    </div>
                   </div>
+
+                  {/* Founder Name */}
+                  <h3 className="text-base sm:text-lg font-display font-bold text-white group-hover:text-accent-gold transition-colors leading-snug min-h-[2.75rem] flex items-center justify-center">
+                    {founder.name}
+                  </h3>
+
+                  {/* Role / Title */}
+                  <p className="text-xs font-semibold text-[#d4af37] font-mono tracking-wider uppercase mt-1">
+                    {founder.role}
+                  </p>
                 </div>
-
-                {/* Founder Name */}
-                <h3 className="text-xl sm:text-2xl font-display font-bold text-white group-hover:text-accent-gold transition-colors">
-                  {founder.name}
-                </h3>
-
-                {/* Role / Title */}
-                <p className="text-sm font-semibold text-[#d4af37] font-mono tracking-wider uppercase mt-2">
-                  {founder.role}
-                </p>
 
                 {/* Social Links */}
                 {founder.social && (
-                  <div className="flex items-center gap-3 mt-4 pt-3 border-t border-[#47484c]/40">
+                  <div className="flex items-center justify-center gap-3 mt-5 pt-4 border-t border-[#47484c]/40 w-full">
                     {founder.social.linkedin && (
                       <a
                         href={founder.social.linkedin}
