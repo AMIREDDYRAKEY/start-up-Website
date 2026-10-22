@@ -59,19 +59,19 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-2">
-            <Link to="/" className="flex items-center gap-3 mb-5 group w-fit">
-              <div className="w-11 h-11 rounded-xl bg-[#1e2023] border border-[#47484c]/50 p-1 flex items-center justify-center shadow-lg group-hover:border-[#d4af37]/60 transition-colors">
+            <Link to="/" className="flex items-center gap-3.5 mb-5 group w-fit">
+              <div className="w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-[#d4af37] via-[#47484c] to-[#d4af37] shadow-md group-hover:scale-105 transition-transform duration-300">
                 <img
                   src={logo}
-                  alt="DMANBRAY Emblem"
-                  className="w-full h-full object-contain"
+                  alt="DMANBRAY Logo"
+                  className="w-full h-full object-cover rounded-full bg-white"
                 />
               </div>
               <div>
-                <span className="text-white font-display font-bold text-xl tracking-wider">
+                <span className="text-white font-display font-bold text-xl tracking-wider group-hover:text-accent-gold transition-colors">
                   DMANBRAY
                 </span>
-                <span className="block text-[10px] text-[#d4af37] font-semibold tracking-[0.25em] uppercase">
+                <span className="block text-[10px] text-[#d4af37] font-semibold tracking-[0.25em] uppercase -mt-0.5">
                   Innovations
                 </span>
               </div>

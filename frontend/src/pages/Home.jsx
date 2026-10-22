@@ -13,6 +13,12 @@ import {
   Code2,
   Layers,
   ChevronRight,
+  Search,
+  FileText,
+  Palette,
+  ShieldCheck,
+  Rocket,
+  PhoneCall,
 } from "lucide-react";
 import SEO from "../components/SEO";
 import ScrollReveal from "../components/ScrollReveal";
@@ -20,6 +26,7 @@ import ServiceCard from "../components/ServiceCard";
 import ProjectCard from "../components/ProjectCard";
 import TechMarquee from "../components/TechMarquee";
 import FounderCard from "../components/FounderCard";
+import ProcessFlow from "../components/ProcessFlow";
 import {
   services,
   technologies,
@@ -193,20 +200,21 @@ const StatsSection = () => {
 
   return (
     <section className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         {stats.map((stat, idx) => {
           const Icon = stat.icon;
           return (
             <ScrollReveal key={idx} delay={idx * 0.08}>
-              <div className="charcoal-card p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 hover:border-[#d4af37]/60 transition-all duration-300">
-                <div className="p-3 rounded-xl bg-[#282b30] border border-[#47484c]/60 text-accent-gold">
-                  <Icon className="w-5 h-5" />
+              <div className="charcoal-card p-7 flex flex-col sm:flex-row items-center sm:items-start gap-5 hover:border-[#d4af37]/40 transition-all duration-500 group">
+                <div className="relative p-3.5 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(145deg, #282b30, #22252a)', border: '1px solid rgba(71,72,76,0.5)', boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)' }}>
+                  <Icon className="w-5 h-5 text-[#d4af37]" />
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ boxShadow: '0 0 18px rgba(212,175,55,0.1)' }} />
                 </div>
                 <div className="text-center sm:text-left">
-                  <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white">
+                  <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white group-hover:text-[#f3e5ab] transition-colors duration-400">
                     {stat.value}
                   </h3>
-                  <p className="text-xs text-charcoal-300 font-medium mt-0.5">
+                  <p className="text-xs text-[#8b8f96] font-medium mt-1">
                     {stat.label}
                   </p>
                 </div>
@@ -222,7 +230,7 @@ const StatsSection = () => {
 /* ──────────── SERVICES SECTION ──────────── */
 const ServicesSection = () => {
   return (
-    <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section className="max-w-[1220px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <ScrollReveal>
         <div className="text-center mb-14">
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1e2023] border border-[#47484c] text-accent-gold text-xs font-semibold tracking-wider uppercase mb-3 font-mono">
@@ -237,14 +245,14 @@ const ServicesSection = () => {
         </div>
       </ScrollReveal>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
         {services.map((service, index) => (
           <ServiceCard key={service.id} service={service} index={index} />
         ))}
       </div>
 
       <div className="text-center mt-12">
-        <Link to="/services" className="btn-charcoal inline-flex items-center">
+        <Link to="/services" className="btn-charcoal inline-flex items-center text-sm py-3 px-6 rounded-xl">
           View All Services
           <ArrowRight className="w-4 h-4 ml-2" />
         </Link>
@@ -253,21 +261,30 @@ const ServicesSection = () => {
   );
 };
 
-/* ──────────── TECHNOLOGY SECTION ──────────── */
+/* ──────────── TECHNOLOGY SECTION — Interactive Tabbed Cards ──────────── */
 const TechnologySection = () => {
+  const [activeCategory, setActiveCategory] = React.useState("frontend");
+
   const categories = [
-    { key: "frontend", label: "Frontend" },
-    { key: "backend", label: "Backend" },
-    { key: "database", label: "Database" },
-    { key: "mobile", label: "Mobile" },
-    { key: "ai", label: "AI & ML" },
-    { key: "infrastructure", label: "Cloud & DevOps" },
+    { key: "frontend", label: "Frontend", icon: "⚛️", accent: "#61DAFB" },
+    { key: "backend", label: "Backend", icon: "⚙️", accent: "#339933" },
+    { key: "database", label: "Database", icon: "🗄️", accent: "#47A248" },
+    { key: "mobile", label: "Mobile", icon: "📱", accent: "#02569B" },
+    { key: "ai", label: "AI & ML", icon: "🧠", accent: "#10A37F" },
+    { key: "infrastructure", label: "Cloud & DevOps", icon: "☁️", accent: "#FF9900" },
   ];
 
+  const activeCat = categories.find((c) => c.key === activeCategory);
+  const activeTechs = technologies[activeCategory] || [];
+
   return (
-    <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-20 relative overflow-hidden select-none">
+
+
+
+      {/* ── Section Header ── */}
       <ScrollReveal>
-        <div className="text-center mb-14">
+        <div className="relative z-10 text-center mb-12">
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1e2023] border border-[#47484c] text-charcoal-200 text-xs font-semibold tracking-wider uppercase mb-3 font-mono">
             <Code2 className="w-3.5 h-3.5 text-accent-gold" /> Technologies
           </span>
@@ -280,29 +297,164 @@ const TechnologySection = () => {
         </div>
       </ScrollReveal>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {categories.map((cat, catIndex) => (
-          <ScrollReveal key={cat.key} delay={catIndex * 0.05}>
-            <div className="charcoal-card p-5 h-full hover:border-[#d4af37]/60 transition-all duration-300">
-              <h4 className="text-xs font-semibold text-accent-gold uppercase tracking-wider mb-4 border-b border-[#47484c]/40 pb-2">
-                {cat.label}
-              </h4>
-              <div className="space-y-2.5">
-                {technologies[cat.key].map((tech) => (
-                  <div key={tech.name} className="flex items-center gap-2 group cursor-default">
-                    <span
-                      className="w-2 h-2 rounded-full flex-shrink-0 group-hover:scale-125 transition-transform"
-                      style={{ backgroundColor: tech.color }}
+      {/* ── Category Tabs ── */}
+      <ScrollReveal>
+        <div className="relative z-10 flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat.key;
+            return (
+              <motion.button
+                key={cat.key}
+                onClick={() => setActiveCategory(cat.key)}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                className="relative px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-400 cursor-pointer outline-none"
+                style={{
+                  background: isActive
+                    ? `linear-gradient(135deg, ${cat.accent}18, ${cat.accent}08)`
+                    : "rgba(30, 32, 35, 0.8)",
+                  border: isActive
+                    ? `1px solid ${cat.accent}60`
+                    : "1px solid rgba(71, 72, 76, 0.4)",
+                  color: isActive ? "#fff" : "#8b8f96",
+                }}
+              >
+                <span className="flex items-center gap-2">
+                  <span className="text-base sm:text-lg">{cat.icon}</span>
+                  <span className="tracking-wide">{cat.label}</span>
+                </span>
+                {/* Active indicator glow line */}
+                {isActive && (
+                  <motion.div
+                    layoutId="tech-tab-indicator"
+                    className="absolute -bottom-[1px] left-3 right-3 h-[2px] rounded-full"
+                    style={{ backgroundColor: cat.accent }}
+                    transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                  />
+                )}
+              </motion.button>
+            );
+          })}
+        </div>
+      </ScrollReveal>
+
+      {/* ── Tech Cards Grid with AnimatePresence ── */}
+      <div className="relative z-10">
+        <motion.div
+          key={activeCategory}
+          initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -16, scale: 0.97 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-4xl mx-auto"
+        >
+          {activeTechs.map((tech, idx) => (
+            <motion.div
+              key={tech.name}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                duration: 0.45,
+                delay: idx * 0.07,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="group relative rounded-2xl overflow-hidden cursor-default"
+              style={{
+                background: "linear-gradient(160deg, #1e2023 0%, #191b1e 50%, #16181b 100%)",
+                border: "1px solid rgba(71, 72, 76, 0.4)",
+              }}
+            >
+              {/* Hover glow overlay */}
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+                style={{
+                  background: `radial-gradient(ellipse at 50% 0%, ${tech.color}12 0%, transparent 70%)`,
+                }}
+              />
+              {/* Shimmer line on hover */}
+              <div
+                className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background: `linear-gradient(90deg, transparent 0%, ${tech.color}60 50%, transparent 100%)`,
+                }}
+              />
+
+              <div className="relative p-5 sm:p-6 flex items-center gap-4">
+                {/* Glowing Icon Badge */}
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover:scale-110"
+                  style={{
+                    background: `linear-gradient(145deg, ${tech.color}15, ${tech.color}08)`,
+                    border: `1px solid ${tech.color}30`,
+                  }}
+                >
+                  <span
+                    className="w-3 h-3 rounded-full transition-all duration-500 group-hover:scale-125"
+                    style={{
+                      backgroundColor: tech.color,
+                    }}
+                  />
+                </div>
+
+                {/* Tech Info */}
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm font-bold text-white group-hover:text-[#f3e5ab] transition-colors duration-300 mb-1.5 truncate">
+                    {tech.name}
+                  </h4>
+                  {/* Proficiency Bar */}
+                  <div className="w-full h-1 rounded-full bg-[#22252a] overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${75 + idx * 4}%` }}
+                      transition={{ duration: 0.8, delay: idx * 0.07 + 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      className="h-full rounded-full"
+                      style={{
+                        background: `linear-gradient(90deg, ${tech.color}80, ${tech.color})`,
+                      }}
                     />
-                    <span className="text-xs font-medium text-charcoal-200 group-hover:text-white transition-colors">
-                      {tech.name}
-                    </span>
                   </div>
-                ))}
+                </div>
+
+                {/* Arrow indicator */}
+                <ChevronRight
+                  className="w-4 h-4 text-[#47484c] group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300 flex-shrink-0"
+                />
               </div>
-            </div>
-          </ScrollReveal>
-        ))}
+
+              {/* Bottom border glow on hover */}
+              <div
+                className="absolute bottom-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-60 transition-opacity duration-500"
+                style={{
+                  background: `linear-gradient(90deg, transparent 0%, ${tech.color} 50%, transparent 100%)`,
+                }}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* ── Active Category Badge ── */}
+        <motion.div
+          key={`badge-${activeCategory}`}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="flex justify-center mt-8"
+        >
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono font-semibold tracking-wider uppercase"
+            style={{
+              background: `linear-gradient(135deg, ${activeCat?.accent}10, transparent)`,
+              border: `1px solid ${activeCat?.accent}25`,
+              color: activeCat?.accent,
+            }}
+          >
+            <span
+              className="w-1.5 h-1.5 rounded-full animate-pulse"
+              style={{ backgroundColor: activeCat?.accent }}
+            />
+            {activeTechs.length} Technologies
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -311,17 +463,17 @@ const TechnologySection = () => {
 /* ──────────── PROJECTS SECTION ──────────── */
 const ProjectsSection = () => {
   return (
-    <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <ScrollReveal>
         <div className="text-center mb-14">
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1e2023] border border-[#47484c] text-accent-gold text-xs font-semibold tracking-wider uppercase mb-3 font-mono">
             <Layers className="w-3.5 h-3.5" /> Portfolio
           </span>
           <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight mb-4">
-            Selected <span className="gradient-text-gold">Case Studies</span>
+            Our <span className="gradient-text-gold">Work</span>
           </h2>
           <p className="text-charcoal-300 text-base sm:text-lg max-w-2xl mx-auto">
-            Explore recent digital products engineered and shipped for our partners.
+            Real digital products we've engineered and shipped for our partners.
           </p>
         </div>
       </ScrollReveal>
@@ -342,40 +494,88 @@ const ProjectsSection = () => {
   );
 };
 
+/* ──────────── CONSULTATION BANNER ──────────── */
+const ConsultationBanner = () => {
+  return (
+    <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <ScrollReveal>
+        <div
+          className="relative rounded-[24px] p-6 sm:p-8 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6 overflow-hidden"
+          style={{
+            background: "linear-gradient(135deg, #1f2228 0%, #17191d 50%, #121316 100%)",
+            border: "1px solid rgba(212, 175, 55, 0.3)",
+            boxShadow: "0 16px 40px -12px rgba(0,0,0,0.6), 0 0 30px rgba(212,175,55,0.05)",
+          }}
+        >
+          {/* Subtle corner glow */}
+          <div
+            className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none opacity-20 blur-3xl"
+            style={{ background: "radial-gradient(circle, #d4af37, transparent 70%)" }}
+          />
+
+          {/* Left: Phone icon + Call Info */}
+          <div className="flex items-center gap-4 sm:gap-5 text-center sm:text-left">
+            <div
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{
+                background: "linear-gradient(135deg, #d4af37 0%, #aa8010 100%)",
+                boxShadow: "0 4px 20px rgba(212,175,55,0.35)",
+              }}
+            >
+              <PhoneCall className="w-6 h-6 sm:w-7 sm:h-7 text-[#0d0e11]" />
+            </div>
+            <div>
+              <span className="text-[11px] font-mono uppercase tracking-widest text-[#d4af37] font-semibold block mb-0.5">
+                Get A Free Consultation
+              </span>
+              <a
+                href="tel:+919876543210"
+                className="text-xl sm:text-2xl font-display font-extrabold text-white hover:text-[#f3e5ab] transition-colors"
+              >
+                +91 (0) 800-DMANBRAY
+              </a>
+            </div>
+          </div>
+
+          {/* Middle: Short prompt text */}
+          <p className="text-[#8b8f96] text-xs sm:text-sm max-w-md text-center lg:text-left leading-relaxed font-normal">
+            Have an ambitious software project? Our principal engineers will review your architecture, scope, and technical roadmap with zero obligation.
+          </p>
+
+          {/* Right: CTA Button */}
+          <Link
+            to="/contact"
+            className="btn-gold whitespace-nowrap px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold tracking-wide shadow-lg shadow-[#d4af37]/20"
+          >
+            Schedule Consultation
+          </Link>
+        </div>
+      </ScrollReveal>
+    </section>
+  );
+};
+
 /* ──────────── PROCESS SECTION ──────────── */
 const ProcessSection = () => {
   return (
-    <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section className="max-w-[1550px] mx-auto px-4 sm:px-6 lg:px-8 py-20 relative select-none">
       <ScrollReveal>
-        <div className="text-center mb-14">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1e2023] border border-[#47484c] text-charcoal-200 text-xs font-semibold tracking-wider uppercase mb-3 font-mono">
-            Roadmap
+        <div className="text-center mb-10">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1e2023] border border-[#47484c] text-accent-gold text-xs font-semibold tracking-wider uppercase mb-2.5 font-mono">
+            Our Process
           </span>
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight mb-4">
-            How We <span className="gradient-text-silver">Execute</span>
+          <h2 className="text-2xl sm:text-4xl font-display font-bold text-white tracking-tight mb-3">
+            Process <span className="gradient-text-gold">We Follow</span>
           </h2>
+          <p className="text-charcoal-300 text-xs sm:text-sm max-w-lg mx-auto font-normal">
+            A structured, transparent engineering lifecycle ensuring high quality and precision at every phase.
+          </p>
         </div>
       </ScrollReveal>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {processSteps.map((step, index) => (
-          <ScrollReveal key={step.number} delay={index * 0.08}>
-            <div className="charcoal-card p-7 h-full flex flex-col justify-between">
-              <div>
-                <span className="w-8 h-8 rounded-lg bg-[#282b30] border border-[#47484c] text-accent-gold font-mono text-xs font-bold flex items-center justify-center mb-5">
-                  {step.number}
-                </span>
-                <h3 className="text-white font-display font-bold text-lg mb-2.5">
-                  {step.title}
-                </h3>
-                <p className="text-charcoal-300 text-sm leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            </div>
-          </ScrollReveal>
-        ))}
-      </div>
+      <ScrollReveal delay={0.1}>
+        <ProcessFlow />
+      </ScrollReveal>
     </section>
   );
 };
@@ -425,15 +625,18 @@ const CTASection = () => {
   return (
     <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
       <ScrollReveal>
-        <div className="charcoal-card p-10 sm:p-14 border border-[#47484c] relative overflow-hidden">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#282b30] border border-[#47484c] text-accent-gold text-xs font-semibold tracking-wider uppercase mb-5 font-mono">
+        <div className="charcoal-card p-10 sm:p-14 relative overflow-hidden" style={{ border: '1px solid rgba(212,175,55,0.15)', boxShadow: '0 16px 48px -8px rgba(0,0,0,0.6), 0 0 40px rgba(212,175,55,0.04)' }}>
+          {/* Decorative corner accent */}
+          <div className="absolute top-0 left-0 w-24 h-24 pointer-events-none" style={{ background: 'radial-gradient(circle at top left, rgba(212,175,55,0.06) 0%, transparent 70%)' }} />
+          <div className="absolute bottom-0 right-0 w-32 h-32 pointer-events-none" style={{ background: 'radial-gradient(circle at bottom right, rgba(212,175,55,0.06) 0%, transparent 70%)' }} />
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[#d4af37] text-xs font-semibold tracking-wider uppercase mb-6 font-mono" style={{ background: 'linear-gradient(145deg, #282b30, #22252a)', border: '1px solid rgba(71,72,76,0.5)', boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
             <Sparkles className="w-3.5 h-3.5" /> Start Your Venture
           </span>
           <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white mb-5 leading-tight">
             Have An Ambitious Project? <br />
             <span className="gradient-text-gold">Let's Build It Together.</span>
           </h2>
-          <p className="text-charcoal-200 text-base sm:text-lg max-w-xl mx-auto mb-9 leading-relaxed">
+          <p className="text-[#8b8f96] text-base sm:text-lg max-w-xl mx-auto mb-10 leading-relaxed">
             Collaborate with DMANBRAY Innovations for full-cycle software development, custom AI tools, and scalable cloud solutions.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -464,6 +667,7 @@ const Home = () => {
       <ServicesSection />
       <TechnologySection />
       <ProjectsSection />
+      <ConsultationBanner />
       <ProcessSection />
       <FoundersSection />
       <CTASection />

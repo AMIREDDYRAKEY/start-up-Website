@@ -98,24 +98,26 @@ const About = () => {
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ScrollReveal delay={0.05}>
-            <div className="charcoal-card p-8 sm:p-10 border border-[#47484c] h-full hover:border-[#d4af37]/60 transition-all duration-300">
-              <div className="w-12 h-12 rounded-xl bg-[#282b30] border border-[#47484c] flex items-center justify-center mb-6 text-accent-gold">
-                <Eye className="w-6 h-6" />
+            <div className="charcoal-card p-8 sm:p-10 h-full hover:border-[#d4af37]/40 transition-all duration-500 group overflow-hidden relative" style={{ border: '1px solid rgba(71,72,76,0.4)' }}>
+              <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }} />
+              <div className="relative w-13 h-13 rounded-2xl flex items-center justify-center mb-7" style={{ background: 'linear-gradient(145deg, #282b30, #22252a)', border: '1px solid rgba(71,72,76,0.5)', boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)', width: '52px', height: '52px' }}>
+                <Eye className="w-6 h-6 text-[#d4af37]" />
               </div>
-              <h3 className="text-2xl font-display font-bold text-white mb-4">Our Vision</h3>
-              <p className="text-charcoal-300 leading-relaxed">
+              <h3 className="text-2xl font-display font-bold text-white mb-4 group-hover:text-[#f3e5ab] transition-colors duration-400">Our Vision</h3>
+              <p className="text-[#8b8f96] leading-relaxed">
                 To be a premier global technology firm renowned for developing groundbreaking software products that accelerate human potential and business efficiency.
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={0.15}>
-            <div className="charcoal-card p-8 sm:p-10 border border-[#47484c] h-full hover:border-[#d4af37]/60 transition-all duration-300">
-              <div className="w-12 h-12 rounded-xl bg-[#282b30] border border-[#47484c] flex items-center justify-center mb-6 text-accent-gold">
-                <Target className="w-6 h-6" />
+            <div className="charcoal-card p-8 sm:p-10 h-full hover:border-[#d4af37]/40 transition-all duration-500 group overflow-hidden relative" style={{ border: '1px solid rgba(71,72,76,0.4)' }}>
+              <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }} />
+              <div className="relative w-13 h-13 rounded-2xl flex items-center justify-center mb-7" style={{ background: 'linear-gradient(145deg, #282b30, #22252a)', border: '1px solid rgba(71,72,76,0.5)', boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)', width: '52px', height: '52px' }}>
+                <Target className="w-6 h-6 text-[#d4af37]" />
               </div>
-              <h3 className="text-2xl font-display font-bold text-white mb-4">Our Mission</h3>
-              <p className="text-charcoal-300 leading-relaxed">
+              <h3 className="text-2xl font-display font-bold text-white mb-4 group-hover:text-[#f3e5ab] transition-colors duration-400">Our Mission</h3>
+              <p className="text-[#8b8f96] leading-relaxed">
                 To empower startups and established businesses with world-class engineering, elegant design, and intelligent automation that drives measurable success.
               </p>
             </div>
@@ -179,14 +181,15 @@ const About = () => {
             const Icon = val.icon;
             return (
               <ScrollReveal key={val.title} delay={idx * 0.08}>
-                <div className="charcoal-card p-7 h-full hover:border-[#d4af37]/60 transition-all duration-300">
-                  <div className="w-10 h-10 rounded-lg bg-[#282b30] border border-[#47484c] flex items-center justify-center text-accent-gold mb-5">
-                    <Icon className="w-5 h-5" />
+                <div className="charcoal-card p-8 h-full hover:border-[#d4af37]/40 transition-all duration-500 group overflow-hidden relative">
+                  <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }} />
+                  <div className="relative w-11 h-11 rounded-xl flex items-center justify-center mb-6" style={{ background: 'linear-gradient(145deg, #282b30, #22252a)', border: '1px solid rgba(71,72,76,0.5)', boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)' }}>
+                    <Icon className="w-5 h-5 text-[#d4af37]" />
                   </div>
-                  <h4 className="text-lg font-display font-bold text-white mb-2">
+                  <h4 className="text-lg font-display font-bold text-white mb-3 group-hover:text-[#f3e5ab] transition-colors duration-400">
                     {val.title}
                   </h4>
-                  <p className="text-charcoal-300 text-sm leading-relaxed">
+                  <p className="text-[#8b8f96] text-sm leading-relaxed">
                     {val.description}
                   </p>
                 </div>
@@ -199,11 +202,13 @@ const About = () => {
       {/* CTA */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
         <ScrollReveal>
-          <div className="charcoal-card p-10 border border-[#47484c]">
+          <div className="charcoal-card p-10 relative overflow-hidden" style={{ border: '1px solid rgba(212,175,55,0.15)', boxShadow: '0 16px 48px -8px rgba(0,0,0,0.6), 0 0 40px rgba(212,175,55,0.04)' }}>
+            <div className="absolute top-0 left-0 w-24 h-24 pointer-events-none" style={{ background: 'radial-gradient(circle at top left, rgba(212,175,55,0.06) 0%, transparent 70%)' }} />
+            <div className="absolute bottom-0 right-0 w-32 h-32 pointer-events-none" style={{ background: 'radial-gradient(circle at bottom right, rgba(212,175,55,0.06) 0%, transparent 70%)' }} />
             <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mb-4">
               Want to learn more about our engineering work?
             </h3>
-            <p className="text-charcoal-300 text-sm max-w-lg mx-auto mb-8">
+            <p className="text-[#8b8f96] text-sm max-w-lg mx-auto mb-8">
               Explore our services or get in touch with our team directly.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

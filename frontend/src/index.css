@@ -48,27 +48,33 @@
 }
 
 @layer components {
-  /* Royal Charcoal Glass Cards */
+  /* Royal Charcoal Glass Cards — Premium */
   .charcoal-card {
-    background: linear-gradient(145deg, #1e2023 0%, #1e1f22 100%);
-    border: 1px solid rgba(71, 72, 76, 0.45);
-    border-radius: 18px;
-    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.6);
+    background: linear-gradient(160deg, #1e2023 0%, #191b1e 50%, #1a1c1f 100%);
+    border: 1px solid rgba(71, 72, 76, 0.4);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    position: relative;
   }
 
   .charcoal-card-hover {
-    background: linear-gradient(145deg, #1e2023 0%, #1e1f22 100%);
-    border: 1px solid rgba(71, 72, 76, 0.45);
-    border-radius: 18px;
-    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.6);
+    background: linear-gradient(160deg, #1e2023 0%, #191b1e 50%, #1a1c1f 100%);
+    border: 1px solid rgba(71, 72, 76, 0.4);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
   }
 
   .charcoal-card-hover:hover {
-    background: linear-gradient(145deg, #24272c 0%, #1e2023 100%);
-    border-color: rgba(212, 175, 55, 0.45);
-    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.75), 0 0 25px rgba(212, 175, 55, 0.12);
-    transform: translateY(-4px);
+    background: linear-gradient(160deg, #24272c 0%, #1e2023 60%, #1a1c1f 100%);
+    border-color: rgba(212, 175, 55, 0.35);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7),
+                0 0 30px rgba(212, 175, 55, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-6px);
   }
 
   .gradient-text-gold {
