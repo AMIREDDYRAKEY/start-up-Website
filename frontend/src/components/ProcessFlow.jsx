@@ -53,7 +53,7 @@ const ProcessFlow = () => {
   return (
     <div className="w-full relative select-none">
       {/* ── 6 Colored Dots Signature (Matching Reference Infographic) ── */}
-      <div className="flex items-center justify-center gap-2.5 mb-10">
+      <div className="flex items-center justify-center gap-2.5 mb-6">
         {steps.map((s) => (
           <span
             key={s.number}
@@ -64,7 +64,7 @@ const ProcessFlow = () => {
       </div>
 
       {/* ── DESKTOP VIEW (Enlarged 6-Node Serpentine Interlocking Flow) ── */}
-      <div className="hidden xl:block relative w-full max-w-[1500px] mx-auto py-6">
+      <div className="hidden xl:block relative w-full max-w-[1500px] mx-auto pt-2 pb-0">
         <svg
           viewBox="0 0 1450 380"
           className="w-full h-auto drop-shadow-sm overflow-visible"

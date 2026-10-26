@@ -55,8 +55,8 @@ const Footer = () => {
       {/* Subtle top gold accent glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-2xl h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent" />
 
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-2">
             <Link to="/" className="flex items-center gap-3.5 mb-5 group w-fit">
@@ -128,7 +128,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-14 pt-6 border-t border-[#47484c]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-8 pt-5 border-t border-[#47484c]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-slate-400 text-xs">
             © 2026 DMANBRAY Innovations. All rights reserved.
           </p>

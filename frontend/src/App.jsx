@@ -12,6 +12,8 @@ import Services from "./pages/Services";
 import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
 import Contact from "./pages/Contact";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -40,6 +42,10 @@ const AppContent = () => {
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:id" element={<ProjectDetails />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/terms" element={<TermsAndConditions />} />
+            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             {/* Catch-all redirect */}
             <Route path="*" element={<Home />} />
           </Routes>

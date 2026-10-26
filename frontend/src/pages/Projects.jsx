@@ -38,7 +38,7 @@ const Projects = () => {
       </section>
 
       {/* Projects Grid */}
-      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
@@ -46,16 +46,16 @@ const Projects = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-20 text-center">
-          <div className="charcoal-card p-10 max-w-3xl mx-auto border border-[#47484c]">
-            <h3 className="text-2xl font-display font-bold text-white mb-3">
+        <div className="mt-12 text-center">
+          <div className="charcoal-card p-8 sm:p-10 max-w-3xl mx-auto border border-[#47484c]">
+            <h3 className="text-xl sm:text-2xl font-display font-bold text-white mb-2">
               Ready to start your next big software project?
             </h3>
-            <p className="text-charcoal-300 text-sm max-w-md mx-auto mb-7">
+            <p className="text-charcoal-300 text-xs sm:text-sm max-w-md mx-auto mb-6">
               Let's talk about requirements, timelines, and architectural roadmap.
             </p>
-            <Link to="/contact" className="btn-gold inline-flex items-center">
-              Let's Build It
+            <Link to="/contact" className="btn-gold inline-flex items-center text-xs sm:text-sm">
+              Request Project Approval
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </div>

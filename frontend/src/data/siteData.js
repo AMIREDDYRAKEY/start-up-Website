@@ -221,52 +221,52 @@ export const services = [
 
 export const technologies = {
   frontend: [
-    { name: "React 19", color: "#61DAFB" },
-    { name: "Next.js 15", color: "#ffffff" },
-    { name: "TypeScript", color: "#3178C6" },
-    { name: "Tailwind CSS", color: "#06B6D4" },
-    { name: "Vue.js", color: "#42B883" },
-    { name: "Vite", color: "#646CFF" },
+    { name: "React 19", role: "Component Architecture", badge: "Core UI", color: "#61DAFB" },
+    { name: "Next.js 15", role: "SSR & Edge Runtime", badge: "Production", color: "#ffffff" },
+    { name: "TypeScript", role: "Static Type Engine", badge: "Strict Safety", color: "#3178C6" },
+    { name: "Tailwind CSS", role: "Utility Design System", badge: "Responsive", color: "#06B6D4" },
+    { name: "Vue.js", role: "Progressive Framework", badge: "Reactive", color: "#42B883" },
+    { name: "Vite", role: "Lightning Build Tooling", badge: "HMR Bundler", color: "#646CFF" },
   ],
   backend: [
-    { name: "Node.js", color: "#339933" },
-    { name: "Express.js", color: "#ffffff" },
-    { name: "NestJS", color: "#E0234E" },
-    { name: "Python / FastAPI", color: "#009688" },
-    { name: "GraphQL", color: "#E10098" },
-    { name: "RESTful APIs", color: "#4c8dff" },
+    { name: "Node.js", role: "Asynchronous Runtime", badge: "Event-Driven", color: "#339933" },
+    { name: "Express.js", role: "Microservice Web APIs", badge: "High RPS", color: "#ffffff" },
+    { name: "NestJS", role: "Enterprise Architecture", badge: "Modular", color: "#E0234E" },
+    { name: "Python / FastAPI", role: "High-Speed Async APIs", badge: "AI Ready", color: "#009688" },
+    { name: "GraphQL", role: "Declarative Data Query", badge: "Federation", color: "#E10098" },
+    { name: "RESTful APIs", role: "Standard Protocol Layer", badge: "Stateless", color: "#4c8dff" },
   ],
   database: [
-    { name: "MongoDB Atlas", color: "#47A248" },
-    { name: "PostgreSQL", color: "#4169E1" },
-    { name: "Redis Cache", color: "#DC382D" },
-    { name: "MySQL", color: "#4479A1" },
-    { name: "Supabase", color: "#3ECF8E" },
-    { name: "Prisma ORM", color: "#5A67D8" },
+    { name: "MongoDB Atlas", role: "Document Cloud Database", badge: "NoSQL Scale", color: "#47A248" },
+    { name: "PostgreSQL", role: "Relational ACID Engine", badge: "SQL Leader", color: "#4169E1" },
+    { name: "Redis Cache", role: "In-Memory Sub-ms Cache", badge: "Ultra Fast", color: "#DC382D" },
+    { name: "MySQL", role: "Structured Enterprise DB", badge: "High Integrity", color: "#4479A1" },
+    { name: "Supabase", role: "Realtime Postgres BaaS", badge: "Auth & DB", color: "#3ECF8E" },
+    { name: "Prisma ORM", role: "Type-Safe DB Client", badge: "Auto Schema", color: "#5A67D8" },
   ],
   mobile: [
-    { name: "Flutter", color: "#02569B" },
-    { name: "React Native", color: "#61DAFB" },
-    { name: "Android (Kotlin)", color: "#7F52FF" },
-    { name: "iOS (Swift)", color: "#F05138" },
-    { name: "Dart", color: "#0175C2" },
-    { name: "Expo", color: "#ffffff" },
+    { name: "Flutter", role: "Multi-Platform Engine", badge: "60fps Native", color: "#02569B" },
+    { name: "React Native", role: "Cross-Platform Framework", badge: "Universal", color: "#61DAFB" },
+    { name: "Android (Kotlin)", role: "Native Android Platform", badge: "Modern JVM", color: "#7F52FF" },
+    { name: "iOS (Swift)", role: "Apple Native Ecosystem", badge: "High Perf", color: "#F05138" },
+    { name: "Dart", role: "Client-Optimized Language", badge: "AOT Compiled", color: "#0175C2" },
+    { name: "Expo", role: "Rapid Mobile Toolchain", badge: "OTA Updates", color: "#ffffff" },
   ],
   ai: [
-    { name: "Python AI/ML", color: "#3776AB" },
-    { name: "OpenAI / GPT-4o", color: "#10A37F" },
-    { name: "LangChain & LlamaIndex", color: "#1C3C3C" },
-    { name: "PyTorch & TensorFlow", color: "#EE4C2C" },
-    { name: "Vector DB (Pinecone)", color: "#8b5cf6" },
-    { name: "RAG Architectures", color: "#d4af37" },
+    { name: "Python AI/ML", role: "Data Science & Tensors", badge: "Compute", color: "#3776AB" },
+    { name: "OpenAI / GPT-4o", role: "Large Language Models", badge: "Multimodal", color: "#10A37F" },
+    { name: "LangChain & LlamaIndex", role: "Agentic Chains & Tools", badge: "Orchestration", color: "#1C3C3C" },
+    { name: "PyTorch & TensorFlow", role: "Deep Neural Networks", badge: "Inference", color: "#EE4C2C" },
+    { name: "Vector DB (Pinecone)", role: "Semantic Embeddings Index", badge: "KNN Search", color: "#8b5cf6" },
+    { name: "RAG Architectures", role: "Contextual Knowledge RAG", badge: "Zero Hallucination", color: "#d4af37" },
   ],
   infrastructure: [
-    { name: "AWS Cloud", color: "#FF9900" },
-    { name: "Docker Containers", color: "#2496ED" },
-    { name: "Kubernetes (K8s)", color: "#326CE5" },
-    { name: "CI/CD (GitHub Actions)", color: "#FC6D26" },
-    { name: "Nginx & Reverse Proxy", color: "#009639" },
-    { name: "Cloudflare & CDN", color: "#F38020" },
+    { name: "AWS Cloud", role: "Elastic Infrastructure", badge: "Cloud Native", color: "#FF9900" },
+    { name: "Docker Containers", role: "Containerized Workloads", badge: "Immutable", color: "#2496ED" },
+    { name: "Kubernetes (K8s)", role: "Container Orchestration", badge: "Auto Healing", color: "#326CE5" },
+    { name: "CI/CD (GitHub Actions)", role: "Automated Deploy Pipeline", badge: "Continuous", color: "#FC6D26" },
+    { name: "Nginx & Reverse Proxy", role: "Load Balancing & SSL", badge: "Edge Proxy", color: "#009639" },
+    { name: "Cloudflare & CDN", role: "DDoS Shield & Edge Caching", badge: "Global DNS", color: "#F38020" },
   ],
 };
 
@@ -284,7 +284,7 @@ export const solutions = [
     icon: "🛒",
   },
   {
-    title: "Hospitality",
+    title: "Hotel Management",
     description:
       "Hotel and restaurant management systems. Reservations, operations, billing and guest experience platforms.",
     icon: "🏨",
@@ -355,6 +355,10 @@ export const projects = [
     outcome:
       "The system streamlines school operations, reduces manual paperwork and improves parent-school communication through automated notifications.",
     color: "#4c8dff",
+    isLive: true,
+    liveUrl: "https://school-app-five-theta.vercel.app/",
+    demoUrl: "/projects/school-management",
+    githubUrl: "https://github.com/AMIREDDYRAKEY/start-up-Website",
   },
   {
     id: "ecommerce-platform",
@@ -389,11 +393,15 @@ export const projects = [
     outcome:
       "The platform enables businesses to manage their online store independently with full control over products, orders and customer data.",
     color: "#8b5cf6",
+    isLive: true,
+    liveUrl: "https://e-commerce-frontend-six-swart.vercel.app/",
+    demoUrl: "/projects/ecommerce-platform",
+    githubUrl: "https://github.com/AMIREDDYRAKEY/start-up-Website",
   },
   {
     id: "hotel-management",
     title: "Hotel Management System",
-    category: "Hospitality",
+    category: "Hotel Management",
     shortDescription: "Hotel operations, reservations and administration.",
     overview:
       "A modern hotel management system that handles room reservations, guest check-in/check-out, billing, housekeeping and operational reporting.",
@@ -422,6 +430,10 @@ export const projects = [
     outcome:
       "Hotels can manage their complete operations from a single platform, reducing errors and improving guest satisfaction.",
     color: "#06b6d4",
+    isLive: true,
+    liveUrl: "https://hotel-new-7cfw.vercel.app/",
+    demoUrl: "/projects/hotel-management",
+    githubUrl: "https://github.com/AMIREDDYRAKEY/start-up-Website",
   },
   {
     id: "attendance-notification",
@@ -454,6 +466,10 @@ export const projects = [
     outcome:
       "Schools can track attendance efficiently and parents stay informed about their children's attendance in real-time.",
     color: "#f59e0b",
+    isLive: true,
+    liveUrl: "https://dmanbray-attendance.vercel.app",
+    demoUrl: "/projects/attendance-notification",
+    githubUrl: "https://github.com/AMIREDDYRAKEY/start-up-Website",
   },
   {
     id: "enterprise-ai-platform",
@@ -488,6 +504,10 @@ export const projects = [
     outcome:
       "Organizations can unlock the knowledge in their documents, enabling faster decision-making and reducing time spent searching for information.",
     color: "#ec4899",
+    isLive: true,
+    liveUrl: "https://dmanbray-ai-enterprise.vercel.app",
+    demoUrl: "/projects/enterprise-ai-platform",
+    githubUrl: "https://github.com/AMIREDDYRAKEY/start-up-Website",
   },
 ];
 

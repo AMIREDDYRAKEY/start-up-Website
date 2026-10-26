@@ -106,9 +106,9 @@ const Services = () => {
                       <div>
                         <Link
                           to="/contact"
-                          className="btn-gold w-full text-center"
+                          className="btn-gold w-full text-center text-xs sm:text-sm"
                         >
-                          Request A Proposal
+                          Request Project Approval
                           <ArrowRight className="w-4 h-4 ml-2 inline-block" />
                         </Link>
                       </div>
@@ -122,16 +122,16 @@ const Services = () => {
       </section>
 
       {/* CTA */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-        <div className="charcoal-card p-10 border border-[#47484c]">
-          <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mb-4">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 text-center">
+        <div className="charcoal-card p-8 sm:p-10 border border-[#47484c]">
+          <h3 className="text-xl sm:text-3xl font-display font-bold text-white mb-3">
             Need a custom engineering solution not listed here?
           </h3>
-          <p className="text-charcoal-300 text-sm max-w-lg mx-auto mb-8">
+          <p className="text-charcoal-300 text-xs sm:text-sm max-w-lg mx-auto mb-6">
             We architect tailored solutions for unique enterprise requirements.
           </p>
-          <Link to="/contact" className="btn-gold inline-flex items-center">
-            Discuss Your Architecture
+          <Link to="/contact" className="btn-gold inline-flex items-center text-xs sm:text-sm">
+            Request Project Approval
             <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
         </div>

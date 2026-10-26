@@ -10,6 +10,7 @@ import {
   Layers,
   Code2,
   Eye,
+  ExternalLink,
 } from "lucide-react";
 import SEO from "../components/SEO";
 import { projects } from "../data/siteData";
@@ -76,12 +77,35 @@ const ProjectDetails = () => {
             <p className="text-charcoal-200 text-lg sm:text-xl leading-relaxed font-normal">
               {project.shortDescription}
             </p>
+            <div className="flex flex-wrap items-center gap-4 mt-8">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-gold inline-flex items-center gap-2 px-6 py-3"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Launch Live Demo
+                </a>
+              )}
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-charcoal inline-flex items-center gap-2 px-6 py-3"
+                >
+                  View Repository
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Main Details Body */}
-      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-14">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Left / Main Column */}
           <div className="lg:col-span-8 space-y-10">
