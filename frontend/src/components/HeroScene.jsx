@@ -18,6 +18,7 @@ const vertexShader = /* glsl */ `
   uniform vec2 uMouse;
   uniform float uPixelRatio;
   uniform float uSize;
+  uniform float uAlphaScale;
   varying float vAlpha;
   varying float vAccent;
 
@@ -44,7 +45,7 @@ const vertexShader = /* glsl */ `
 
     gl_Position = clip;
     gl_PointSize = uSize * uPixelRatio * (0.55 + aSeed * 0.9) / -mv.z;
-    vAlpha = (0.25 + 0.75 * aSeed) * (1.0 - uScroll * 0.85) * t;
+    vAlpha = (0.25 + 0.75 * aSeed) * (1.0 - uScroll * 0.85) * t * uAlphaScale;
     vAccent = step(0.9, aSeed);
   }
 `;
@@ -133,8 +134,8 @@ const HeroScene = ({ scrollRef, className = "" }) => {
       const world = new THREE.Group();
       world.rotation.x = 0.35;
 
-      // Positioned comfortably in right half with enlarged scale without clipping
-      const worldScale = isMobile ? 0.48 : isTablet ? 0.52 : 0.58;
+      // Clean scale: refined & non-obtrusive on mobile, expansive on desktop
+      const worldScale = isMobile ? 0.36 : isTablet ? 0.48 : 0.58;
       world.scale.set(worldScale, worldScale, worldScale);
 
       const calcWorldX = (w, h) => {
@@ -145,7 +146,12 @@ const HeroScene = ({ scrollRef, className = "" }) => {
         return Math.min(2.2, Math.max(1.85, aspect * 1.25));
       };
 
-      world.position.set(calcWorldX(mount.clientWidth, mount.clientHeight), isMobile ? -0.2 : 0.05, 0);
+      const calcWorldY = () => {
+        // Shift lower on mobile so it never collides with headline/description
+        return window.innerWidth < 768 ? -0.55 : 0.05;
+      };
+
+      world.position.set(calcWorldX(mount.clientWidth, mount.clientHeight), calcWorldY(), 0);
       scene.add(world);
 
       const count = isMobile ? 3800 : 7500;
@@ -194,7 +200,8 @@ const HeroScene = ({ scrollRef, className = "" }) => {
         uScroll: { value: 0 },
         uMouse: { value: new THREE.Vector2(9, 9) },
         uPixelRatio: { value: dpr },
-        uSize: { value: mobile ? 26 : 32 }, // Balanced particle point size
+        uSize: { value: isMobile ? 18 : isTablet ? 24 : 32 },
+        uAlphaScale: { value: isMobile ? 0.62 : 1.0 },
       };
       const mat = new THREE.ShaderMaterial({
         vertexShader,
@@ -298,6 +305,7 @@ const HeroScene = ({ scrollRef, className = "" }) => {
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         world.position.x = calcWorldX(w, h);
+        world.position.y = calcWorldY();
       };
       window.addEventListener("resize", onResize);
 

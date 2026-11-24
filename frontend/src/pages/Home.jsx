@@ -109,13 +109,15 @@ const HeroSection = () => {
         scrollRef={scrollRef}
         className="pointer-events-none absolute inset-0 h-full w-full"
       />
+      {/* Mobile contrast overlay: gently dims background behind the text so content is completely legible and never clutters with 3D particles */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_25%,rgba(11,11,12,0.92)_0%,rgba(11,11,12,0.70)_50%,rgba(11,11,12,0.30)_100%)] lg:hidden" />
       <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,#0b0b0c_16%,rgba(11,11,12,0.65)_36%,transparent_62%)] lg:block" />
       <div className="grain pointer-events-none absolute inset-0" />
 
       {/* Hero content shifted down with ample top padding and balanced horizontal layout */}
-      <div className="hero-content container-site relative flex h-full flex-col justify-between pb-8 pt-24 sm:pb-10 sm:pt-28 lg:pt-36">
+      <div className="hero-content container-site relative flex h-full flex-col justify-between pb-6 pt-20 sm:pb-10 sm:pt-28 lg:pt-36">
         {/* Left-aligned hero content with ample room so headline stays on one line */}
-        <div className="relative z-10 flex flex-col items-start gap-4 pt-1 sm:gap-5 max-w-xl lg:max-w-[48%] xl:max-w-[46%] w-full">
+        <div className="relative z-10 flex flex-col items-start gap-3.5 pt-1 sm:gap-5 max-w-xl lg:max-w-[48%] xl:max-w-[46%] w-full">
           {/* Eyebrow / meta */}
           <div className="hero-meta flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-fog-400">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-light animate-pulse" />
@@ -131,18 +133,18 @@ const HeroSection = () => {
           </h1>
 
           {/* Description restored to clean size */}
-          <p className="hero-fade max-w-lg text-[14px] leading-relaxed text-fog-200 sm:text-[15px]">
+          <p className="hero-fade max-w-lg text-[13.5px] leading-relaxed text-fog-200 sm:text-[15px]">
             An independent technology company creating digital products, intelligent platforms and
             experiences that shape tomorrow.
           </p>
 
-          {/* Horizontal ecosystem tags */}
+          {/* Horizontal ecosystem tags - clean pill capsules on mobile so text never collides with particles */}
           <div className="hero-fade w-full pt-0.5">
-            <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <ul className="flex flex-wrap items-center gap-2 sm:gap-x-4 sm:gap-y-2">
               {ecosystem.map((v) => (
                 <li
                   key={v.id}
-                  className="hero-unit flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-fog-400 transition-colors hover:text-paper sm:text-[11px]"
+                  className="hero-unit flex items-center gap-1.5 rounded-full border border-white/10 bg-black/50 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-fog-200 backdrop-blur-sm transition-colors hover:border-brand/40 hover:text-paper sm:border-transparent sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none sm:text-[11px] sm:tracking-[0.16em] sm:text-fog-400"
                 >
                   <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: v.signal }} />
                   <span className="opacity-60">{v.index}</span>
@@ -153,23 +155,23 @@ const HeroSection = () => {
           </div>
 
           {/* Action CTAs */}
-          <div className="hero-fade flex flex-wrap items-center gap-4 pt-1 sm:gap-6">
+          <div className="hero-fade flex flex-wrap items-center gap-3 pt-1 sm:gap-6">
             <Link
               to="/services"
-              className="group flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink transition-transform duration-300 hover:scale-105 sm:px-6 sm:py-3"
+              className="group flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs sm:text-sm font-semibold text-ink transition-transform duration-300 hover:scale-105 sm:px-6 sm:py-3 shadow-lg shadow-black/20"
             >
               <span>Discover what we build</span>
-              <ArrowDown className="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" />
+              <ArrowDown className="h-3.5 w-3.5 sm:h-4 sm:w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" />
             </Link>
             <Link
               to="/contact"
-              className="group flex items-center gap-2 px-2 py-2 text-sm font-medium text-paper transition-opacity hover:opacity-80"
+              className="group flex items-center gap-2 px-2 py-2 text-xs sm:text-sm font-medium text-paper transition-opacity hover:opacity-80"
             >
               <span className="roll">
                 <span>Start a conversation</span>
                 <span aria-hidden="true">Start a conversation</span>
               </span>
-              <ArrowUpRight className="h-4 w-4" />
+              <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Link>
           </div>
         </div>
@@ -185,7 +187,7 @@ const HeroSection = () => {
               onClick={scrollToUniverse}
               label="Explore our universe"
               ring="Explore our universe • "
-              size="h-24 w-24 sm:h-28 sm:w-28"
+              size="h-20 w-20 sm:h-28 sm:w-28"
             />
           </div>
         </div>
