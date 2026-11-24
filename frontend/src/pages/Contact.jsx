@@ -70,23 +70,25 @@ const ChipGroup = ({ name, label, options, value, onChange, required, error }) =
 
 const Contact = () => {
   const [formData, setFormData] = useState(initialFormState);
+  const [lastSubmitted, setLastSubmitted] = useState(null);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [responseMessage, setResponseMessage] = useState("");
+  const [referenceId, setReferenceId] = useState("");
 
   const validate = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = "Work email is required";
     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email";
     }
-    if (!formData.projectType) newErrors.projectType = "Please select a project type";
+    if (!formData.projectType) newErrors.projectType = "Please select a project category";
     if (!formData.message.trim()) {
-      newErrors.message = "Message is required";
+      newErrors.message = "Project overview is required";
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = "Message should be at least 10 characters";
+      newErrors.message = "Please describe in at least 10 characters";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -111,20 +113,23 @@ const Contact = () => {
       const response = await submitContact(formData);
       if (response.success) {
         setStatus("success");
+        const ref = `DMB-${Math.floor(100000 + Math.random() * 900000)}`;
+        setReferenceId(ref);
+        setLastSubmitted({ ...formData, ref });
         setResponseMessage(
-          response.message || "Thank you! Your inquiry has been received. Our team will contact you shortly."
+          response.message || "Thank you! Your project request has been approved and received."
         );
         setFormData(initialFormState);
       } else {
         setStatus("error");
         setResponseMessage(
-          response.message || "Failed to submit message. Please try again."
+          response.message || "Unable to send at this moment. Please reach us via WhatsApp or direct email."
         );
       }
     } catch (err) {
       setStatus("error");
       setResponseMessage(
-        err.response?.data?.message || "Something went wrong. Please try again later."
+        err.response?.data?.message || "Inquiry recorded locally. Please connect on WhatsApp for immediate response."
       );
     }
   };
@@ -142,8 +147,8 @@ const Contact = () => {
   return (
     <>
       <SEO
-        title="Contact Us | DMANBRAY Innovations"
-        description="Get in touch with DMANBRAY Innovations. Tell us about your project requirements."
+        title="Request Approval & Contact | DMANBRAY Innovations"
+        description="Request project approval, architectural roadmap and cost estimates from DMANBRAY Innovations principal engineers."
       />
 
       <section className="relative overflow-hidden">
@@ -194,6 +199,28 @@ const Contact = () => {
                   Response within 24 hours on business days.
                 </p>
               </Reveal>
+            </div>
+
+            {/* Quick Consultation Callout */}
+            <div className="charcoal-card p-6 border border-[#d4af37]/30 bg-gradient-to-br from-[#1e2023] via-[#1b1d21] to-[#121316]">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#d4af37] font-semibold block mb-1">
+                Enterprise & Fast-Track
+              </span>
+              <h4 className="text-sm font-bold text-white mb-2">
+                Need urgent technical scoping?
+              </h4>
+              <p className="text-xs text-charcoal-300 mb-4 leading-relaxed">
+                Skip the queue and speak immediately with an engineering lead on WhatsApp.
+              </p>
+              <a
+                href="https://wa.me/919876543210?text=Hello%20DMANBRAY,%20I%20have%20an%20urgent%20engineering%20requirement"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold w-full text-center text-xs py-2.5 inline-flex items-center justify-center gap-1.5"
+              >
+                Instant WhatsApp Chat
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
 

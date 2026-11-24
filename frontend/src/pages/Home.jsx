@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ArrowDown, Plus } from "lucide-react";
+import { ArrowUpRight, ArrowDown, Plus, Star, Quote } from "lucide-react";
 import SEO from "../components/SEO";
 import FounderCard from "../components/FounderCard";
 import CircleCTA from "../components/CircleCTA";
@@ -18,6 +18,7 @@ import {
   projects,
   processSteps,
   founders,
+  testimonials,
   ecosystem,
 } from "../data/siteData";
 import founder1Img from "../assets/founder-1.png";
@@ -103,27 +104,28 @@ const HeroSection = () => {
 
   return (
     <section ref={root} className="relative h-[100svh] min-h-[640px] overflow-hidden bg-ink">
-      {/* WebGL universe placed firmly in right half of the hero */}
+      {/* WebGL universe with full canvas so particles never clip on the right and ambient particles drift across */}
       <HeroScene
         scrollRef={scrollRef}
-        className="pointer-events-none absolute inset-y-0 right-0 w-full overflow-hidden lg:left-[45%] lg:w-[55%]"
+        className="pointer-events-none absolute inset-0 h-full w-full"
       />
-      <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,#0b0b0c_20%,transparent_55%)] lg:block" />
+      <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,#0b0b0c_16%,rgba(11,11,12,0.65)_36%,transparent_62%)] lg:block" />
       <div className="grain pointer-events-none absolute inset-0" />
 
-      <div className="hero-content container-site relative flex h-full flex-col justify-between pb-6 pt-16 sm:pb-8 sm:pt-20">
-        {/* Left-aligned hero content occupying the left side */}
-        <div className="relative z-10 flex flex-col items-start gap-4 pt-1 sm:gap-5 max-w-xl lg:max-w-[46%] xl:max-w-[44%]">
+      {/* Hero content shifted down with ample top padding and balanced horizontal layout */}
+      <div className="hero-content container-site relative flex h-full flex-col justify-between pb-8 pt-24 sm:pb-10 sm:pt-28 lg:pt-36">
+        {/* Left-aligned hero content with ample room so headline stays on one line */}
+        <div className="relative z-10 flex flex-col items-start gap-4 pt-1 sm:gap-5 max-w-xl lg:max-w-[48%] xl:max-w-[46%] w-full">
           {/* Eyebrow / meta */}
           <div className="hero-meta flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-fog-400">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-light animate-pulse" />
             <span>(EST. INDIA) · INDEPENDENT TECHNOLOGY COMPANY</span>
           </div>
 
-          {/* Left-aligned headline restored to balanced size */}
-          <h1 className="font-display text-[clamp(2.4rem,5.6vw,5.2rem)] font-bold leading-[0.94] tracking-[-0.05em] text-paper">
-            <span className="hero-title-line block">We build</span>
-            <span className="hero-title-line block text-brand-light">
+          {/* Left-aligned headline - whitespace-nowrap ensures 'what comes next.' stays strictly on one line */}
+          <h1 className="font-display text-[clamp(2.2rem,4.8vw,5rem)] font-bold leading-[0.95] tracking-[-0.05em] text-paper">
+            <span className="hero-title-line block whitespace-nowrap">We build</span>
+            <span className="hero-title-line block text-brand-light whitespace-nowrap">
               what comes next<span className="text-paper">.</span>
             </span>
           </h1>
@@ -945,7 +947,100 @@ const FoundersSection = () => {
   );
 };
 
-/* ═══════════════════ 10 · FINALE: careers + contact ═══════════════════ */
+/* ═══════════════════ 08 · TESTIMONIALS ═══════════════════ */
+const TestimonialsSection = () => {
+  const root = useRef(null);
+  useGSAP(() => applyScrollAnimations(root.current), { scope: root });
+
+  return (
+    <section ref={root} className="relative z-10 overflow-hidden bg-ink py-section border-t border-white/10">
+      <div className="grain pointer-events-none absolute inset-0" />
+      <div className="container-site relative">
+        <div className="mb-14 grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-8">
+            <Chapter n="08" className="mb-6 text-fog-400">
+              Client Feedback
+            </Chapter>
+            <h2
+              data-split="chars"
+              className="font-display text-[clamp(2.5rem,6vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.05em] text-paper"
+            >
+              Trusted by builders.<br />
+              <span className="text-brand-light">Proven in production.</span>
+            </h2>
+          </div>
+          <div data-reveal className="flex flex-col gap-3 lg:col-span-4">
+            <p className="text-[15px] leading-relaxed text-fog-400">
+              What founders, engineering leads, and product innovators say about partnering with DMANBRAY.
+            </p>
+            <div className="inline-flex items-center gap-2 self-start rounded-full border border-brand/30 bg-brand/10 px-3.5 py-1 text-xs font-medium text-brand-light">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-light animate-pulse" />
+              <span>5.0 Client Satisfaction · 100% Delivery Reliability</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:gap-8">
+          {testimonials.map((t, idx) => (
+            <div
+              key={t.id}
+              data-reveal
+              data-delay={idx * 0.08}
+              className="group relative flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all duration-300 hover:border-brand/40 hover:bg-white/[0.05] sm:p-8"
+            >
+              <div>
+                {/* Header: Star Rating & Domain Tag */}
+                <div className="flex items-center justify-between gap-4 pb-5 border-b border-white/5">
+                  <div className="flex items-center gap-1 text-amber-400">
+                    {[...Array(t.rating)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <span className="rounded-full bg-white/5 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-wider text-fog-400">
+                    {t.tag}
+                  </span>
+                </div>
+
+                {/* Quote Content */}
+                <p className="mt-5 text-[15px] sm:text-[16px] leading-relaxed text-fog-200">
+                  "{t.content}"
+                </p>
+              </div>
+
+              {/* Footer: Author Info & Key Metric */}
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-5">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-brand/30 bg-brand/15 font-display text-xs font-bold text-brand-light">
+                    {t.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .slice(0, 2)
+                      .join("")}
+                  </div>
+                  <div>
+                    <h4 className="font-display text-sm font-semibold text-paper group-hover:text-brand-light transition-colors duration-200">
+                      {t.name}
+                    </h4>
+                    <p className="text-xs text-fog-400">
+                      {t.role} · <span className="text-fog-200">{t.company}</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1 text-right">
+                  <span className="block font-mono text-[10px] uppercase tracking-wider text-fog-500">Impact</span>
+                  <span className="font-display text-xs font-semibold text-brand-light">{t.metric}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════ 09 · FINALE: careers + contact ═══════════════════ */
 const FinaleSection = () => {
   const root = useRef(null);
   useGSAP(() => applyScrollAnimations(root.current), { scope: root });
@@ -954,7 +1049,7 @@ const FinaleSection = () => {
     <section ref={root} className="relative z-10 overflow-hidden bg-ink py-section">
       <div className="grain pointer-events-none absolute inset-0" />
       <div className="container-site relative">
-        <Chapter n="08" className="mb-10 text-fog-400">
+        <Chapter n="09" className="mb-10 text-fog-400">
           What's next
         </Chapter>
         <h2 className="font-display text-[clamp(3.4rem,10.5vw,11.5rem)] font-bold leading-[0.84] tracking-[-0.065em] text-paper">
@@ -1007,6 +1102,7 @@ const Home = () => {
       <NumbersSection />
       <ProcessSection />
       <FoundersSection />
+      <TestimonialsSection />
       <FinaleSection />
     </>
   );

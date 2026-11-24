@@ -17,6 +17,8 @@ import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
 import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 // Scrolls to `#id` targets once the new page has mounted (e.g. /services#ai-solutions)
 const HashScroll = () => {

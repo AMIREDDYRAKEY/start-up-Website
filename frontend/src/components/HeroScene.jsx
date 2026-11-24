@@ -115,7 +115,9 @@ const HeroScene = ({ scrollRef, className = "" }) => {
       if (disposed || !mountRef.current) return;
       const mount = mountRef.current;
       const reduce = prefersReducedMotion();
-      const mobile = window.innerWidth < 768;
+      const isMobile = window.innerWidth < 768;
+      const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+      const mobile = isMobile;
 
       const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: "high-performance" });
       const dpr = Math.min(window.devicePixelRatio, 2);
@@ -125,19 +127,28 @@ const HeroScene = ({ scrollRef, className = "" }) => {
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(42, mount.clientWidth / mount.clientHeight, 0.1, 100);
-      camera.position.set(0, 0, mobile ? 8.8 : 7.2);
+      camera.position.set(0, 0, isMobile ? 8.8 : 7.2);
 
       /* ═══════════════════ 1. COMPACT 3D PARTICLE PLANET & RINGS ═══════════════════ */
       const world = new THREE.Group();
       world.rotation.x = 0.35;
 
-      // Positioned cleanly within the right-hand canvas area
-      const worldScale = mobile ? 0.48 : 0.64;
+      // Positioned comfortably in right half with enlarged scale without clipping
+      const worldScale = isMobile ? 0.48 : isTablet ? 0.52 : 0.58;
       world.scale.set(worldScale, worldScale, worldScale);
-      world.position.set(mobile ? 0 : 0.35, mobile ? -0.25 : 0.05, 0);
+
+      const calcWorldX = (w, h) => {
+        if (window.innerWidth < 768) return 0;
+        if (window.innerWidth < 1024) return 1.2;
+        const aspect = w / h;
+        // Keep planet centered in right half: safe from right edge with balanced gap from text
+        return Math.min(2.2, Math.max(1.85, aspect * 1.25));
+      };
+
+      world.position.set(calcWorldX(mount.clientWidth, mount.clientHeight), isMobile ? -0.2 : 0.05, 0);
       scene.add(world);
 
-      const count = mobile ? 3800 : 7500;
+      const count = isMobile ? 3800 : 7500;
       const target = new Float32Array(count * 3);
       const scatter = new Float32Array(count * 3);
       const seed = new Float32Array(count);
@@ -286,6 +297,7 @@ const HeroScene = ({ scrollRef, className = "" }) => {
         renderer.setSize(w, h);
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
+        world.position.x = calcWorldX(w, h);
       };
       window.addEventListener("resize", onResize);
 
