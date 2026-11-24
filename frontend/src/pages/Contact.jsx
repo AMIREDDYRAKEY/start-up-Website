@@ -1,16 +1,8 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Send,
-  CheckCircle,
-  AlertCircle,
-  Loader2,
-  Mail,
-  Phone,
-  MapPin,
-  Sparkles,
-} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle, AlertCircle, Loader2, ArrowUpRight } from "lucide-react";
 import SEO from "../components/SEO";
+import { EASE, MaskLine, Reveal, Magnetic } from "../components/Motion";
 import { submitContact } from "../services/api";
 import { projectTypes, budgetRanges } from "../data/siteData";
 
@@ -23,6 +15,58 @@ const initialFormState = {
   budget: "",
   message: "",
 };
+
+/* Labelled underline input */
+const Field = ({ id, label, required, error, children }) => (
+  <div>
+    <label htmlFor={id} className="mb-1 block font-mono text-[11px] uppercase tracking-[0.18em] text-fog-500">
+      {label}
+      {required && <span className="text-brand-light"> *</span>}
+    </label>
+    {children}
+    {error && (
+      <p id={`${id}-error`} className="mt-2 text-xs text-[#ff8a7a]">
+        {error}
+      </p>
+    )}
+  </div>
+);
+
+/* Chip group backed by real radio inputs — same name/value contract as a <select> */
+const ChipGroup = ({ name, label, options, value, onChange, required, error }) => (
+  <fieldset>
+    <legend className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fog-500">
+      {label}
+      {required && <span className="text-brand-light"> *</span>}
+    </legend>
+    <div className="flex flex-wrap gap-2">
+      {options.map((opt) => {
+        const checked = value === opt;
+        return (
+          <label
+            key={opt}
+            className={`cursor-pointer rounded-full border px-4 py-2 text-sm transition-colors duration-300 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-brand ${
+              checked
+                ? "border-white bg-white text-ink"
+                : "border-white/15 text-fog-300 hover:border-white/40 hover:text-paper"
+            }`}
+          >
+            <input
+              type="radio"
+              name={name}
+              value={opt}
+              checked={checked}
+              onChange={onChange}
+              className="sr-only"
+            />
+            {opt}
+          </label>
+        );
+      })}
+    </div>
+    {error && <p className="mt-3 text-xs text-[#ff8a7a]">{error}</p>}
+  </fieldset>
+);
 
 const Contact = () => {
   const [formData, setFormData] = useState(initialFormState);
@@ -85,8 +129,15 @@ const Contact = () => {
     }
   };
 
-  const inputClasses =
-    "w-full bg-[#16181b] border border-[#47484c]/60 rounded-xl px-4 py-3.5 text-white text-sm placeholder-charcoal-400 focus:outline-none focus:border-[#d4af37] focus:bg-[#1e2023] transition-all duration-300";
+  const fieldProps = (name) => ({
+    id: name,
+    name,
+    value: formData[name],
+    onChange: handleChange,
+    "aria-invalid": errors[name] ? true : undefined,
+    "aria-describedby": errors[name] ? `${name}-error` : undefined,
+    className: "field",
+  });
 
   return (
     <>
@@ -95,245 +146,169 @@ const Contact = () => {
         description="Get in touch with DMANBRAY Innovations. Tell us about your project requirements."
       />
 
-      {/* Hero */}
-      <section className="relative pt-[120px] pb-14 overflow-hidden">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-3xl mx-auto text-center flex flex-col items-center"
-          >
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1e2023] border border-[#47484c] text-accent-gold text-xs font-semibold tracking-wider uppercase mb-4 font-mono">
-              <Sparkles className="w-3.5 h-3.5" /> Start A Conversation
-            </span>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-white mb-6 leading-tight">
-              Let's Build Something <br className="hidden sm:inline" />
-              <span className="gradient-text-gold">Extraordinary Together.</span>
-            </h1>
-            <p className="text-charcoal-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
-              Tell us what you're creating. We'll analyze your requirements and provide an architectural roadmap and estimate.
-            </p>
-          </motion.div>
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="grain absolute inset-0" />
         </div>
-      </section>
+      <div className="container-site relative pb-section pt-36 sm:pt-44">
+        <div className="grid gap-16 lg:grid-cols-12">
+          {/* Left: statement + details */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <span className="eyebrow mb-8">Start a conversation</span>
+              <h1 className="font-display text-[clamp(2.75rem,5.4vw,5.75rem)] font-bold leading-[0.9] tracking-[-0.06em] text-paper">
+                <MaskLine immediate delay={0.1}>Let's build</MaskLine>
+                <MaskLine immediate delay={0.2}>something</MaskLine>
+                <MaskLine immediate delay={0.3}>
+                  <span className="text-gradient">extraordinary.</span>
+                </MaskLine>
+              </h1>
+              <Reveal delay={0.4}>
+                <p className="mt-8 max-w-md text-lead text-fog-300">
+                  Tell us what you're creating. We'll analyse your requirements and come back with
+                  an architectural roadmap and estimate.
+                </p>
+              </Reveal>
 
-      {/* Main Contact Section */}
-      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* Left Info Column */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="charcoal-card p-8 border border-[#47484c]/50">
-              <h3 className="text-xl font-display font-bold text-white mb-6">
-                Company Headquarters
-              </h3>
-
-              <div className="space-y-6 text-sm">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#282b30] border border-[#47484c] flex items-center justify-center flex-shrink-0 text-accent-gold">
-                    <Mail className="w-5 h-5" />
+              <Reveal delay={0.5}>
+                <dl className="mt-14 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                  <div className="flex items-baseline justify-between gap-6 py-5">
+                    <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-fog-500">Email</dt>
+                    <dd>
+                      <a href="mailto:contact@dmanbray.com" className="link-draw text-paper">
+                        contact@dmanbray.com
+                      </a>
+                    </dd>
                   </div>
-                  <div>
-                    <p className="text-xs text-charcoal-400 font-mono uppercase tracking-wider">Email</p>
-                    <p className="text-white font-medium mt-0.5">contact@dmanbray.com</p>
+                  <div className="flex items-baseline justify-between gap-6 py-5">
+                    <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-fog-500">Phone</dt>
+                    <dd className="text-paper">Available on request</dd>
                   </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#282b30] border border-[#47484c] flex items-center justify-center flex-shrink-0 text-accent-gold">
-                    <Phone className="w-5 h-5" />
+                  <div className="flex items-baseline justify-between gap-6 py-5">
+                    <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-fog-500">Location</dt>
+                    <dd className="text-paper">India</dd>
                   </div>
-                  <div>
-                    <p className="text-xs text-charcoal-400 font-mono uppercase tracking-wider">Phone</p>
-                    <p className="text-white font-medium mt-0.5">Available on request</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#282b30] border border-[#47484c] flex items-center justify-center flex-shrink-0 text-accent-gold">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-charcoal-400 font-mono uppercase tracking-wider">Location</p>
-                    <p className="text-white font-medium mt-0.5">India</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-[#47484c]/40 text-xs text-charcoal-300 leading-relaxed">
-                Response guarantee within 24 hours during business days.
-              </div>
+                </dl>
+                <p className="mt-6 flex items-center gap-2.5 text-sm text-fog-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-signal-work" />
+                  Response within 24 hours on business days.
+                </p>
+              </Reveal>
             </div>
           </div>
 
-          {/* Right Form Column */}
-          <div className="lg:col-span-8">
-            <div className="charcoal-card p-8 sm:p-10 border border-[#47484c]/50">
-              <h2 className="text-2xl font-display font-bold text-white mb-2">
-                Project Inquiry
-              </h2>
-              <p className="text-xs text-charcoal-300 mb-8">
-                Fill out the details below and an engineering lead will reach out.
-              </p>
+          {/* Right: form */}
+          <Reveal className="lg:col-span-6 lg:col-start-7" delay={0.3}>
+            <div className="surface rounded-sm p-6 sm:p-10 lg:p-12">
+              <div className="mb-10 flex items-baseline justify-between">
+                <h2 className="text-2xl font-medium tracking-[-0.03em] text-paper">Project inquiry</h2>
+                <span className="font-mono text-[11px] text-fog-500">* required</span>
+              </div>
 
-              {status === "success" && (
-                <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-3 text-sm">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                  <span>{responseMessage}</span>
-                </div>
-              )}
+              <AnimatePresence mode="wait">
+                {status === "success" && (
+                  <motion.div
+                    key="success"
+                    role="status"
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: EASE }}
+                    className="mb-8 flex items-center gap-3 rounded-2xl border border-signal-work/30 bg-signal-work/10 p-4 text-sm text-signal-work"
+                  >
+                    <CheckCircle className="h-5 w-5 flex-shrink-0" />
+                    <span>{responseMessage}</span>
+                  </motion.div>
+                )}
 
-              {status === "error" && (
-                <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center gap-3 text-sm">
-                  <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                  <span>{responseMessage}</span>
-                </div>
-              )}
+                {status === "error" && (
+                  <motion.div
+                    key="error"
+                    role="alert"
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: EASE }}
+                    className="mb-8 flex items-center gap-3 rounded-2xl border border-[#ff8a7a]/30 bg-[#ff8a7a]/10 p-4 text-sm text-[#ff8a7a]"
+                  >
+                    <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                    <span>{responseMessage}</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-semibold text-charcoal-200 mb-2 font-mono">
-                      Your Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="e.g. Alex Sharma"
-                      className={inputClasses}
-                    />
-                    {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-charcoal-200 mb-2 font-mono">
-                      Work Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="alex@company.com"
-                      className={inputClasses}
-                    />
-                    {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
-                  </div>
+              <form onSubmit={handleSubmit} noValidate className="space-y-9">
+                <div className="grid gap-9 sm:grid-cols-2">
+                  <Field id="name" label="Your name" required error={errors.name}>
+                    <input type="text" placeholder="Alex Sharma" autoComplete="name" {...fieldProps("name")} />
+                  </Field>
+                  <Field id="email" label="Work email" required error={errors.email}>
+                    <input type="email" placeholder="alex@company.com" autoComplete="email" {...fieldProps("email")} />
+                  </Field>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-semibold text-charcoal-200 mb-2 font-mono">
-                      Phone Number
-                    </label>
-                    <input
-                      type="text"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+91..."
-                      className={inputClasses}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-charcoal-200 mb-2 font-mono">
-                      Company / Organization
-                    </label>
-                    <input
-                      type="text"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      placeholder="Your Company Name"
-                      className={inputClasses}
-                    />
-                  </div>
+                <div className="grid gap-9 sm:grid-cols-2">
+                  <Field id="phone" label="Phone">
+                    <input type="tel" placeholder="+91…" autoComplete="tel" {...fieldProps("phone")} />
+                  </Field>
+                  <Field id="company" label="Company / organisation">
+                    <input type="text" placeholder="Your company" autoComplete="organization" {...fieldProps("company")} />
+                  </Field>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-semibold text-charcoal-200 mb-2 font-mono">
-                      Project Type *
-                    </label>
-                    <select
-                      name="projectType"
-                      value={formData.projectType}
-                      onChange={handleChange}
-                      className={inputClasses}
-                    >
-                      <option value="">Select a Project Type</option>
-                      {projectTypes.map((pt) => (
-                        <option key={pt} value={pt} className="bg-[#1e2023] text-white">
-                          {pt}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.projectType && (
-                      <p className="text-red-400 text-xs mt-1">{errors.projectType}</p>
-                    )}
-                  </div>
+                <ChipGroup
+                  name="projectType"
+                  label="Project type"
+                  required
+                  options={projectTypes}
+                  value={formData.projectType}
+                  onChange={handleChange}
+                  error={errors.projectType}
+                />
 
-                  <div>
-                    <label className="block text-xs font-semibold text-charcoal-200 mb-2 font-mono">
-                      Estimated Budget
-                    </label>
-                    <select
-                      name="budget"
-                      value={formData.budget}
-                      onChange={handleChange}
-                      className={inputClasses}
-                    >
-                      <option value="">Select a Range</option>
-                      {budgetRanges.map((b) => (
-                        <option key={b} value={b} className="bg-[#1e2023] text-white">
-                          {b}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+                <ChipGroup
+                  name="budget"
+                  label="Estimated budget"
+                  options={budgetRanges}
+                  value={formData.budget}
+                  onChange={handleChange}
+                />
 
-                <div>
-                  <label className="block text-xs font-semibold text-charcoal-200 mb-2 font-mono">
-                    Project Overview & Goals *
-                  </label>
+                <Field id="message" label="Project overview & goals" required error={errors.message}>
                   <textarea
                     rows={5}
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tell us about the product you want to build, requirements, or timeline..."
-                    className={inputClasses}
+                    placeholder="Tell us about the product you want to build, requirements, or timeline…"
+                    {...fieldProps("message")}
+                    className="field resize-none"
                   />
-                  {errors.message && (
-                    <p className="text-red-400 text-xs mt-1">{errors.message}</p>
-                  )}
-                </div>
+                </Field>
 
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="btn-gold w-full sm:w-auto inline-flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  {status === "loading" ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      Send Project Inquiry
-                    </>
-                  )}
-                </button>
+                <Magnetic strength={0.2}>
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="btn-accent group cursor-pointer pr-2.5 disabled:cursor-wait disabled:opacity-70"
+                  >
+                    {status === "loading" ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Submitting…
+                      </>
+                    ) : (
+                      <>
+                        Send project inquiry
+                        <span className="btn-icon group-hover:rotate-45">
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </span>
+                      </>
+                    )}
+                  </button>
+                </Magnetic>
               </form>
             </div>
-          </div>
+          </Reveal>
         </div>
+      </div>
       </section>
     </>
   );

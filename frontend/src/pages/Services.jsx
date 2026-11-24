@@ -1,12 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle2, Zap } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import SEO from "../components/SEO";
-import ScrollReveal from "../components/ScrollReveal";
+import { EASE, Reveal } from "../components/Motion";
+import PageHero from "../components/PageHero";
+import CTASection from "../components/CTA";
 import { services } from "../data/siteData";
 
+/* Tracks which service section is currently in the reading zone */
+const useActiveSection = (ids) => {
+  const [active, setActive] = useState(ids[0]);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [ids]);
+  return active;
+};
+
+const serviceIds = services.map((s) => s.id);
+
 const Services = () => {
+  const active = useActiveSection(serviceIds);
+
   return (
     <>
       <SEO
@@ -14,128 +41,131 @@ const Services = () => {
         description="Comprehensive engineering services: Web Apps, Android Apps, Custom Software, AI, SaaS, Backend, Cloud & Automation."
       />
 
-      {/* Hero */}
-      <section className="relative pt-[120px] pb-16 overflow-hidden">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-3xl mx-auto text-center flex flex-col items-center"
-          >
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1e2023] border border-[#47484c] text-accent-gold text-xs font-semibold tracking-wider uppercase mb-4 font-mono">
-              <Zap className="w-3.5 h-3.5" /> What We Build
-            </span>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-white mb-6 leading-tight">
-              Engineering Solutions <br className="hidden sm:inline" />
-              <span className="gradient-text-gold">Tailored For Growth.</span>
-            </h1>
-            <p className="text-charcoal-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
-              From enterprise web platforms and native mobile applications to custom AI pipelines and scalable SaaS architectures.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        index="03"
+        eyebrow={`${services.length} disciplines · one team`}
+        title="Engineering"
+        highlight="tailored for growth."
+        description="From enterprise web platforms and native mobile applications to custom AI pipelines and scalable SaaS architectures — designed, engineered and supported by one team."
+      />
 
-      {/* Detailed Services List */}
-      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="space-y-12">
-          {services.map((service, index) => {
-            const IconComponent = service.icon;
-            return (
-              <ScrollReveal key={service.id}>
-                <div
+      {/* Services with sticky index */}
+      <section className="container-site pb-section pt-4">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <aside className="hidden lg:col-span-3 lg:block">
+            <nav className="sticky top-32" aria-label="Services index">
+              <ul className="space-y-1">
+                {services.map((s, i) => {
+                  const isActive = active === s.id;
+                  return (
+                    <li key={s.id}>
+                      <a
+                        href={`#${s.id}`}
+                        className={`relative flex items-center gap-4 py-2 text-sm transition-colors duration-300 ${
+                          isActive ? "text-paper" : "text-fog-500 hover:text-fog-200"
+                        }`}
+                      >
+                        <span className="w-6 font-mono text-[11px]">{String(i + 1).padStart(2, "0")}</span>
+                        {s.title}
+                        {isActive && (
+                          <motion.span
+                            layoutId="services-index"
+                            className="absolute -left-4 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-brand"
+                            transition={{ duration: 0.5, ease: EASE }}
+                          />
+                        )}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+              <Link to="/contact" className="btn-ghost mt-10">
+                Request a proposal
+              </Link>
+            </nav>
+          </aside>
+
+          <div className="lg:col-span-9">
+            {services.map((service, index) => {
+              const IconComponent = service.icon;
+              return (
+                <article
+                  key={service.id}
                   id={service.id}
-                  className="charcoal-card p-8 sm:p-10 lg:p-12 relative overflow-hidden group hover:border-[#47484c] transition-colors"
+                  className="scroll-mt-28 border-t border-white/10 py-14 first:border-t-0 first:pt-0 sm:py-20"
                 >
-                  <span className="absolute top-4 right-8 text-7xl sm:text-9xl font-display font-extrabold text-[#282b30]/30 select-none pointer-events-none">
-                    0{index + 1}
-                  </span>
+                  <Reveal className="flex items-start justify-between gap-6">
+                    <div>
+                      <span className="font-mono text-xs text-brand-light">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <h2 className="mt-4 font-display text-[clamp(2.5rem,5.2vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.055em] text-paper">{service.title}</h2>
+                    </div>
+                    <span className="mt-6 hidden h-16 w-16 shrink-0 items-center justify-center rounded-full bg-brand text-white sm:flex">
+                      <IconComponent className="h-6 w-6" strokeWidth={1.5} />
+                    </span>
+                  </Reveal>
 
-                  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <div className="lg:col-span-7">
-                      <div className="w-14 h-14 rounded-2xl bg-[#282b30] border border-[#47484c] flex items-center justify-center mb-6 text-accent-gold">
-                        <IconComponent className="w-7 h-7" />
-                      </div>
-                      <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mb-4">
-                        {service.title}
+                  <Reveal delay={0.05}>
+                    <p className="mt-8 max-w-2xl text-lead text-fog-300">{service.fullDescription}</p>
+                  </Reveal>
+
+                  <div className="mt-12 grid gap-10 md:grid-cols-2">
+                    <Reveal delay={0.1}>
+                      <h3 className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-fog-500">
+                        Capabilities
                       </h3>
-                      <p className="text-charcoal-200 text-base leading-relaxed mb-6 font-normal">
-                        {service.description}
-                      </p>
-
-                      <div className="mb-6">
-                        <h4 className="text-xs font-semibold text-charcoal-300 uppercase tracking-wider mb-3 font-mono">
-                          Key Capabilities & Deliverables
-                        </h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                          {service.features.map((feat) => (
-                            <div key={feat} className="flex items-center gap-2 text-xs text-charcoal-200">
-                              <CheckCircle2 className="w-4 h-4 text-[#d4af37] flex-shrink-0" />
-                              <span>{feat}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-xs font-semibold text-charcoal-300 uppercase tracking-wider mb-2.5 font-mono">
-                          Tech Stack
-                        </h4>
-                        <div className="flex flex-wrap gap-1.5">
-                          {service.technologies.map((t) => (
-                            <span
-                              key={t}
-                              className="text-[11px] font-mono text-charcoal-100 bg-[#282b30] border border-[#47484c]/60 rounded-md px-2.5 py-1"
-                            >
-                              {t}
+                      <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
+                        {service.features.map((feat) => (
+                          <li key={feat} className="flex items-center gap-3 py-3 text-[15px] text-fog-200">
+                            <span className="h-1 w-1 rounded-full bg-brand" />
+                            {feat}
+                          </li>
+                        ))}
+                      </ul>
+                    </Reveal>
+                    <Reveal delay={0.15}>
+                      <h3 className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-fog-500">
+                        Process
+                      </h3>
+                      <ol className="space-y-3">
+                        {service.process.map((step, i) => (
+                          <li key={step} className="flex items-baseline gap-4 text-[15px] text-fog-200">
+                            <span className="font-mono text-[11px] text-fog-500">
+                              {String(i + 1).padStart(2, "0")}
                             </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="lg:col-span-5 flex flex-col justify-between h-full pt-4 lg:pt-0 border-t lg:border-t-0 lg:border-l border-[#47484c]/30 lg:pl-8">
-                      <div className="space-y-4 mb-8">
-                        <h4 className="text-sm font-semibold text-white">Why Choose DMANBRAY?</h4>
-                        <p className="text-xs text-charcoal-300 leading-relaxed">
-                          We deliver production-ready code with continuous testing, automated CI/CD deployment pipelines, and long-term maintenance support.
-                        </p>
-                      </div>
-
-                      <div>
-                        <Link
-                          to="/contact"
-                          className="btn-gold w-full text-center"
-                        >
-                          Request A Proposal
-                          <ArrowRight className="w-4 h-4 ml-2 inline-block" />
-                        </Link>
-                      </div>
-                    </div>
+                            {step}
+                          </li>
+                        ))}
+                      </ol>
+                    </Reveal>
                   </div>
-                </div>
-              </ScrollReveal>
-            );
-          })}
+
+                  <Reveal delay={0.1} className="mt-12 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-wrap gap-2">
+                      {service.technologies.map((t) => (
+                        <span key={t} className="tag">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <Link to="/contact" className="group inline-flex shrink-0 items-center gap-2 text-sm text-paper">
+                      <span className="link-draw">Request a proposal</span>
+                      <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" />
+                    </Link>
+                  </Reveal>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-        <div className="charcoal-card p-10 border border-[#47484c]">
-          <h3 className="text-2xl sm:text-3xl font-display font-bold text-white mb-4">
-            Need a custom engineering solution not listed here?
-          </h3>
-          <p className="text-charcoal-300 text-sm max-w-lg mx-auto mb-8">
-            We architect tailored solutions for unique enterprise requirements.
-          </p>
-          <Link to="/contact" className="btn-gold inline-flex items-center">
-            Discuss Your Architecture
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Link>
-        </div>
-      </section>
+      <CTASection
+        title="Need something"
+        highlight="not listed here?"
+        description="We architect tailored solutions for unique enterprise requirements."
+      />
     </>
   );
 };

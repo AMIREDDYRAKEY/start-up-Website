@@ -1,113 +1,99 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import logo from "../assets/dmanbray-circle-logo.png";
+import React, { useEffect, useRef, useState } from "react";
+import { gsap, prefersReducedMotion } from "../lib/gsap";
 
+const SEEN_KEY = "dmanbray:intro-seen";
+export const INTRO_EVENT = "dmanbray:intro-done";
+
+const hasSeenIntro = () => {
+  try {
+    return sessionStorage.getItem(SEEN_KEY) === "1";
+  } catch {
+    return false;
+  }
+};
+
+// Lets other components wait for the intro to finish before choreographing
+export const whenIntroDone = (cb) => {
+  if (window.__dmanbrayIntroDone) {
+    cb();
+    return () => {};
+  }
+  window.addEventListener(INTRO_EVENT, cb, { once: true });
+  return () => window.removeEventListener(INTRO_EVENT, cb);
+};
+
+const finish = () => {
+  window.__dmanbrayIntroDone = true;
+  window.dispatchEvent(new Event(INTRO_EVENT));
+};
+
+/* Counter preloader: 000 → 100, the wordmark rises, then the curtain lifts.
+   Once per session; skipped for reduced motion. */
 const Preloader = ({ onFinish }) => {
-  const [progress, setProgress] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+  const [visible, setVisible] = useState(() => !hasSeenIntro() && !prefersReducedMotion());
+  const rootRef = useRef(null);
+  const countRef = useRef(null);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(() => {
-            setIsVisible(false);
-            if (onFinish) onFinish();
-          }, 600);
-          return 100;
+    if (!visible) {
+      finish();
+      onFinish?.();
+      return;
+    }
+    const counter = { v: 0 };
+    const tl = gsap.timeline({
+      onComplete: () => {
+        try {
+          sessionStorage.setItem(SEEN_KEY, "1");
+        } catch {
+          /* storage unavailable — intro will simply replay */
         }
-        const increment = Math.floor(Math.random() * 6) + 3;
-        const next = prev + increment;
-        return next > 100 ? 100 : next;
-      });
-    }, 110);
+        setVisible(false);
+        onFinish?.();
+      },
+    });
+    tl.to(counter, {
+      v: 100,
+      duration: 1.6,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        if (countRef.current) countRef.current.textContent = String(Math.round(counter.v)).padStart(3, "0");
+      },
+    })
+      .from(".pl-char", { yPercent: 110, duration: 1, stagger: 0.04, ease: "expo.out" }, 0.15)
+      .to(".pl-bar", { scaleX: 1, duration: 1.6, ease: "power2.inOut" }, 0)
+      .to(".pl-char", { yPercent: -110, duration: 0.7, stagger: 0.02, ease: "expo.in" }, "+=0.1")
+      .add(finish, "-=0.1")
+      .to(rootRef.current, { yPercent: -100, duration: 1, ease: "expo.inOut" }, "-=0.2");
+    return () => tl.kill();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    return () => clearInterval(timer);
-  }, [onFinish]);
-
-  const circumference = 2 * Math.PI * 56; // radius = 56, circumference ≈ 351.86
+  if (!visible) return null;
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#121316] text-white overflow-hidden select-none px-4"
-        >
-          {/* Subtle Ambient Glow */}
-          <motion.div
-            animate={{ scale: [1, 1.25, 1], opacity: [0.15, 0.3, 0.15] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-gradient-to-tr from-[#d4af37]/20 via-[#47484c]/20 to-transparent blur-[120px] pointer-events-none"
-          />
-
-          <div className="relative z-10 flex flex-col items-center">
-            {/* Circular Progress & Round Logo */}
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 flex items-center justify-center">
-              {/* Outer Circular SVG Progress Ring */}
-              <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 144 144">
-                {/* Background Ring Track */}
-                <circle
-                  cx="72"
-                  cy="72"
-                  r="56"
-                  stroke="#47484c"
-                  strokeWidth="3.5"
-                  fill="none"
-                  opacity="0.35"
-                />
-                {/* Animated Gold Progress Ring */}
-                <motion.circle
-                  cx="72"
-                  cy="72"
-                  r="56"
-                  stroke="#d4af37"
-                  strokeWidth="3.5"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeDasharray={circumference}
-                  animate={{
-                    strokeDashoffset: circumference - (circumference * Math.min(progress, 100)) / 100,
-                  }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                />
-              </svg>
-
-              {/* Inner Round Logo Frame */}
-              <motion.div
-                initial={{ scale: 0.85, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="w-20 h-20 sm:w-26 sm:h-26 rounded-full overflow-hidden bg-[#121316] p-1.5 sm:p-2 border-2 border-[#d4af37] shadow-[0_0_35px_rgba(212,175,55,0.25)] flex items-center justify-center relative z-10"
-              >
-                <img
-                  src={logo}
-                  alt="DMANBRAY Logo"
-                  className="w-full h-full object-contain rounded-full"
-                />
-              </motion.div>
-            </div>
-
-            {/* Brand Title & Percentage Counter */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="text-center mt-6"
-            >
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-display font-extrabold tracking-[0.25em] uppercase text-white">
-                DMANBRAY
-              </h1>
-              <p className="text-xs sm:text-sm font-mono text-[#d4af37] font-bold tracking-widest mt-2">
-                {progress}%
-              </p>
-            </motion.div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div ref={rootRef} className="fixed inset-0 z-[9999] flex flex-col justify-between bg-ink-950 p-5 text-paper sm:p-10" aria-hidden="true">
+      <div className="flex justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-fog-400">
+        <span>DMANBRAY Innovations</span>
+        <span>Loading experience</span>
+      </div>
+      <div className="flex overflow-hidden font-display text-[18vw] font-bold leading-[0.85] tracking-[-0.06em] sm:text-[14vw]">
+        {"DMANBRAY".split("").map((c, i) => (
+          <span key={i} className="pl-char inline-block">
+            {c}
+          </span>
+        ))}
+      </div>
+      <div>
+        <div className="mb-4 flex items-end justify-between">
+          <span ref={countRef} className="font-display text-6xl font-semibold tabular-nums tracking-tight sm:text-8xl">
+            000
+          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-fog-400">Innovate · Build · Grow</span>
+        </div>
+        <div className="pl-bar h-px w-full origin-left scale-x-0 bg-brand" />
+      </div>
+    </div>
   );
 };
 

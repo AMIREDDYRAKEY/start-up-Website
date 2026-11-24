@@ -1,130 +1,213 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import logo from "../assets/dmanbray-nav-logo.png";
+import { EASE, EASE_IN_OUT } from "./Motion";
+import { ecosystem } from "../data/siteData";
+import { useLenis } from "./SmoothScroll";
 
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Services", path: "/services" },
   { name: "Projects", path: "/projects" },
+  { name: "Careers", path: "/careers" },
   { name: "Contact", path: "/contact" },
 ];
+
+const isActivePath = (pathname, path) =>
+  path === "/" ? pathname === "/" : pathname.startsWith(path);
+
+// Label that rolls upward to a duplicate of itself on hover
+const Roll = ({ children }) => (
+  <span className="roll">
+    <span>{children}</span>
+    <span aria-hidden="true">{children}</span>
+  </span>
+);
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const lenis = useLenis();
 
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
 
+  // Lock page scroll (native and Lenis) while the menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    if (isOpen) lenis.current?.stop();
+    else lenis.current?.start();
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, lenis]);
+
+  // Detect scroll past the hero to swap to a solid background
+  useEffect(() => {
+    const updateScroll = () => {
+      const y = window.scrollY || (lenis.current ? lenis.current.scroll : 0);
+      setScrolled(y > 20);
+    };
+    updateScroll();
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    return () => window.removeEventListener("scroll", updateScroll);
+  }, [lenis]);
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#16181b]/95 backdrop-blur-md border-b border-[#47484c]/40 shadow-lg shadow-black/40"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-3.5 group">
-            <div className="w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-[#d4af37] via-[#47484c] to-[#d4af37] shadow-md group-hover:scale-105 transition-transform duration-300">
-              <img
-                src={logo}
-                alt="DMANBRAY Logo"
-                className="w-full h-full object-cover rounded-full bg-white"
-              />
-            </div>
-            <div>
-              <span className="text-white font-display font-bold text-lg tracking-wider group-hover:text-accent-gold transition-colors">
-                DMANBRAY
-              </span>
-              <span className="block text-[10px] text-accent-gold font-semibold tracking-[0.25em] uppercase -mt-1">
-                Innovations
-              </span>
-            </div>
+    <>
+      {/* Scroll-aware header:
+          - At the very top (over dark hero): transparent with soft gradient scrim
+          - Once scrolled: 100% solid dark bar with border to ensure ZERO content overlap */}
+      <header
+        className={`fixed inset-x-0 top-0 z-50 text-paper transition-all duration-300 ease-in-out ${
+          scrolled
+            ? "bg-[#070708] shadow-[0_8px_32px_rgba(0,0,0,0.7)]"
+            : "bg-transparent"
+        }`}
+      >
+        {/* Hairline bottom border — fades in on scroll, never flashes */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-white/10 transition-opacity duration-300"
+          style={{ opacity: scrolled ? 1 : 0 }}
+          aria-hidden="true"
+        />
+
+        {/* Top gradient scrim — always in DOM, fades out when scrolled */}
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-24 transition-opacity duration-300"
+          style={{
+            background: "linear-gradient(to bottom, rgba(11,11,12,0.75) 0%, transparent 100%)",
+            opacity: scrolled ? 0 : 1,
+          }}
+          aria-hidden="true"
+        />
+
+        <nav aria-label="Primary" className="container-site relative flex h-14 items-center justify-between sm:h-16">
+          <Link
+            to="/"
+            className="group flex items-center gap-2.5 font-display text-xl font-bold tracking-[-0.04em] sm:text-2xl"
+            aria-label="DMANBRAY home"
+          >
+            <span className="h-7 w-7 overflow-hidden rounded-full bg-white shrink-0 sm:h-8 sm:w-8 shadow-sm">
+              <img src={logo} alt="DMANBRAY" className="h-full w-full object-cover" />
+            </span>
+            <span className="flex items-baseline gap-0.5">
+              DMANBRAY<span className="text-xs align-super text-brand-light">®</span>
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1.5 p-1 rounded-full bg-[#1e2023]/80 border border-[#47484c]/50">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
+          <ul className="hidden items-center gap-8 lg:flex">
+            {navLinks.map((link, i) => {
+              const active = isActivePath(location.pathname, link.path);
               return (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className={`relative px-4 py-2 text-xs font-semibold tracking-wide rounded-full transition-all duration-200 ${
-                    isActive
-                      ? "text-white bg-[#282b30] shadow-sm border border-[#47484c]/60"
-                      : "text-charcoal-200 hover:text-white hover:bg-white/[0.04]"
-                  }`}
-                >
-                  {link.name}
-                </Link>
+                <li key={link.name}>
+                  <Link
+                    to={link.path}
+                    className="group flex items-start gap-1.5 text-sm font-medium transition-opacity duration-200 hover:opacity-80"
+                    aria-current={active ? "page" : undefined}
+                  >
+                    <span className="font-mono text-[9px] opacity-50">0{i + 1}</span>
+                    <Roll>{link.name}</Roll>
+                    {active && <span className="mt-1.5 h-1 w-1 rounded-full bg-paper" />}
+                  </Link>
+                </li>
               );
             })}
-          </div>
+          </ul>
 
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center">
-            <Link to="/contact" className="btn-gold text-xs uppercase tracking-wider">
-              Get In Touch
-              <ArrowRight className="w-3.5 h-3.5 ml-2" />
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-lg text-charcoal-200 hover:text-white hover:bg-[#1e2023] transition-colors"
-            aria-label="Toggle menu"
+            onClick={() => setIsOpen(true)}
+            className="group flex items-center gap-3 text-sm font-medium lg:hidden"
+            aria-label="Open menu"
+            aria-expanded={isOpen}
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <Roll>Menu</Roll>
+            <span className="flex flex-col gap-1.5">
+              <span className="block h-px w-6 bg-paper" />
+              <span className="block h-px w-4 self-end bg-paper transition-all duration-500 group-hover:w-6" />
+            </span>
           </button>
-        </div>
-      </div>
+        </nav>
+      </header>
 
-      {/* Mobile Menu */}
+      {/* Full-screen menu — unchanged */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0, y: -8 }}
-            animate={{ opacity: 1, height: "auto", y: 0 }}
-            exit={{ opacity: 0, height: 0, y: -8 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden bg-[#16181b]/98 backdrop-blur-xl border-b border-[#47484c]/60 px-6 py-6 shadow-2xl space-y-3 overflow-hidden"
+            key="menu"
+            initial={{ clipPath: "circle(0% at 100% 0%)" }}
+            animate={{ clipPath: "circle(150% at 100% 0%)" }}
+            exit={{ clipPath: "circle(0% at 100% 0%)" }}
+            transition={{ duration: 0.9, ease: EASE_IN_OUT }}
+            className="fixed inset-0 z-[60] flex flex-col bg-[#070708] text-white"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className="block py-3 px-4 rounded-xl text-base font-semibold text-charcoal-100 hover:bg-[#1e2023] hover:text-[#d4af37] transition-all duration-300"
-              >
-                {link.name}
-              </Link>
-            ))}
-            <div className="pt-2">
-              <Link to="/contact" className="btn-gold w-full text-center py-3.5 text-sm uppercase tracking-wider">
-                Get In Touch
-              </Link>
+            <div className="container-site flex h-20 items-center justify-between sm:h-24">
+              <span className="flex items-center gap-3">
+                <span className="h-9 w-9 overflow-hidden rounded-full bg-white">
+                  <img src={logo} alt="" className="h-full w-full object-cover" />
+                </span>
+                <span className="font-display text-xl font-bold tracking-[-0.04em]">DMANBRAY</span>
+              </span>
+              <button onClick={() => setIsOpen(false)} className="group flex items-center gap-3 text-sm font-medium" aria-label="Close menu">
+                <Roll>Close</Roll>
+                <span className="relative block h-5 w-5">
+                  <span className="absolute left-0 top-1/2 block h-px w-5 rotate-45 bg-white" />
+                  <span className="absolute left-0 top-1/2 block h-px w-5 -rotate-45 bg-white" />
+                </span>
+              </button>
             </div>
+
+            <ul className="container-site flex flex-1 flex-col justify-center">
+              {navLinks.map((link, i) => (
+                <li key={link.name} className="overflow-hidden border-b border-white/20">
+                  <motion.div
+                    initial={{ y: "105%" }}
+                    animate={{ y: "0%" }}
+                    exit={{ y: "105%" }}
+                    transition={{ duration: 0.8, ease: EASE, delay: 0.25 + i * 0.06 }}
+                  >
+                    <Link to={link.path} className="group flex items-baseline justify-between py-3 sm:py-4">
+                      <span className="flex items-baseline gap-4">
+                        <span className="font-mono text-xs opacity-70">0{i + 1}</span>
+                        <span className="font-display text-[13vw] font-bold leading-[0.9] tracking-[-0.05em] transition-transform duration-500 ease-out-expo group-hover:translate-x-4 sm:text-[9vw] lg:text-[6.5vw]">
+                          {link.name}
+                        </span>
+                      </span>
+                      <ArrowUpRight className="h-6 w-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:h-10 sm:w-10" />
+                    </Link>
+                  </motion.div>
+                </li>
+              ))}
+            </ul>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="container-site flex flex-col gap-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between"
+            >
+              <a href="mailto:contact@dmanbray.com" className="link-draw w-fit">
+                contact@dmanbray.com
+              </a>
+              <div className="flex flex-wrap gap-x-5 gap-y-1 font-mono text-[11px] uppercase tracking-[0.18em] opacity-80">
+                {ecosystem.map((v) => (
+                  <span key={v.id}>{v.name}</span>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 

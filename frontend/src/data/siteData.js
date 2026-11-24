@@ -554,6 +554,76 @@ export const whyDmanbray = [
   },
 ];
 
+/* The DMANBRAY ecosystem — business units presented on Home and About.
+   `signal` maps to the Tailwind `signal.*` colours; `motif` picks the visual. */
+export const ecosystem = [
+  {
+    id: "learn",
+    index: "01",
+    name: "Learn",
+    label: "EdTech & Learning",
+    signal: "#7aa2ff",
+    motif: "learn",
+    headline: "Pathways that transform careers.",
+    description:
+      "Learning platforms, structured programs and digital classrooms that take people from curiosity to capability — built on the same engineering we ship for clients.",
+    focus: ["Learning platforms", "Skill programs", "Assessment systems", "Mentorship"],
+    link: "/projects",
+  },
+  {
+    id: "work",
+    index: "02",
+    name: "Work",
+    label: "Freelance & Opportunity",
+    signal: "#4fd1a5",
+    motif: "work",
+    headline: "Where skills meet real work.",
+    description:
+      "A professional network connecting trained talent with freelance projects and career opportunities, so learning turns directly into livelihood.",
+    focus: ["Freelance projects", "Talent network", "Career opportunities", "Portfolio building"],
+    link: "/contact",
+  },
+  {
+    id: "products",
+    index: "03",
+    name: "Products",
+    label: "Proprietary Products",
+    signal: "#d9b35b",
+    motif: "products",
+    headline: "Software we own, operate and grow.",
+    description:
+      "In-house SaaS and platform products for education, commerce and hospitality — designed for recurring value and engineered to scale.",
+    focus: ["SaaS platforms", "Management systems", "Commerce", "Mobile apps"],
+    link: "/projects",
+  },
+  {
+    id: "studio",
+    index: "04",
+    name: "Studio",
+    label: "Software & Solutions",
+    signal: "#ff7a59",
+    motif: "studio",
+    headline: "Engineering for ambitious teams.",
+    description:
+      "Full-cycle product development for startups and businesses — web, Android, custom software, backend systems and cloud infrastructure.",
+    focus: ["Web & mobile", "Custom software", "APIs & backend", "Cloud"],
+    link: "/services",
+  },
+  {
+    id: "labs",
+    index: "05",
+    name: "Labs",
+    label: "AI & Emerging Tech",
+    signal: "#b48cff",
+    motif: "labs",
+    headline: "Experiments at the edge of what's next.",
+    description:
+      "Applied research in AI — document intelligence, retrieval-augmented systems and automation — that feeds back into every product we build.",
+    focus: ["Document intelligence", "RAG systems", "Automation", "AI agents"],
+    link: "/services#ai-solutions",
+  },
+];
+
 export const projectTypes = [
   "Web Application",
   "Android Application",
